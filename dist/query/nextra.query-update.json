@@ -1,0 +1,15 @@
+{
+  "latest": {
+    "version":"1.0.0"
+  },
+  "all":[{
+    "version":"1.0.0",
+    "features":["Create XMLHttpRequest","Tracks GeoLocation lat, long and name","Size of a window for handle elements"," Create element fonts","Load a function on window."],
+    "more":["Using functions (Nextra, nextra) or signs ($, $n)"],
+    "date": "09/01/2021"
+  }],
+  "name":"Nextra query",
+  "urls":"https://nextra.github.io/dist/query/v/query.js",
+  "author":"Nextra, llc",
+  "license":"Apache 2.0, MIT, Creative Commons international license"
+}
