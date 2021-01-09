@@ -91,6 +91,6 @@ td p {
   border-radius: 0.3rem;
   box-shadow: 0 0 3px lightgrey;
 }
-br {
-  margin-top: 10px;
+td p {
+  padding: 10px;
 }
