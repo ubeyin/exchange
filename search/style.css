@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu");
+body, html {
+  font-family: "Ubuntu";
+  min-width: 400px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 20px;
+  color: #fff;
+  padding-top: 10px;
+}
+.fa-bars {
+  padding-right: 14px;
+  padding-left: 5px;
+}
+.wrapper {
+  position: absolute;
+  top: 55px;
+  left: 0;
+  right: 0;
+  padding: 0px;
+  height: auto;
+}
+.banner {
+  padding: 30px;
+  padding-top: 56px;
+  padding-bottom: 56px;
+  text-align: center;
+  background-image: url("https://image.freepik.com/free-vector/white-3d-modern-background-design_53876-88246.jpg");
+}
+.banner > h4 {
+  line-height: 35px;
+}
+.get-started {
+  margin-top: 45px;
+  width: 200px;
+}
+.container1 {
+  padding: 0px;
+  text-align: center;
+}
+.wrapper1 {
+  padding: 30px;
+}
+.learn-more {
+  width: 160px;
+  margin-top: 19px;
+}
+.f1 {
+  font-size: 28px;
+  background: tomato;
+  border-radius: 100rem;
+  width: 70px;
+  height: 70px;
+  padding-top: 20px;
+  color: #fff;
+}
+.f11 {
+  margin-top: 8px;
+}
+.wrapper2 {
+  padding: 30px;
+  margin-top: 16px;
+}
+.search-btn {
+  width: 100%;
+  margin-top: 16px;
+}
+.wrapper3 {
+  padding: 30px;
+  margin-top: 16px;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  overflow: scroll;
+}
+.wrapper-cp {
+  padding: 30px;
+  margin-top: 16px;
+  text-align: center;
+}
+td h5, td h6 {
+  line-height: 30px;
+  margin-right: 10px;
+}
+td {
+  padding: 20px;
+}
