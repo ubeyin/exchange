@@ -19,8 +19,6 @@ body, html {
 .wrapper {
   position: absolute;
   top: 52px;
-  left: 0;
-  right: 0;
   padding: 0;
   height: auto;
 }
