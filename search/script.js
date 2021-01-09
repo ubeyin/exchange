@@ -61,7 +61,7 @@ function searching2(_this) {
         let view = response.items[i].view_count;
         let tags = "";
         for (var k = 0; k < response.items[i].tags.length; k++) {
-          tags += '<span class="badge bg-danger" style="margin: 15px;">'+response.items[i].tags[k]+'</span>';
+          tags += '<span class="badge bg-primary" style="margin: 10px;">'+response.items[i].tags[k]+'</span>';
         }
         results += '<tr style="font-size: 14px"><td><p style="font-size: 14px"><img style="width: 30px; height: 30px; border-radius:100rem; background: #eee;" src="'+response.items[i].owner.profile_image+'"/><br>'+response.items[i].owner.display_name+'<br><a href= "'+response.items[i].link+'" target="_parent"> Read more </a><br>'+tags+'<br>'+response.items[i].title+'<br><i class="fa fa-comments"></i> '+answer+'<i style="padding-left:19px"></i>'+'<i class="fa fa-eye"></i> '+view+'</p></td></tr>';
       }
