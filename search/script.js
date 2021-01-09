@@ -6,14 +6,14 @@ $(document).ready(function(w) {
       scrollTop: 300+"px"
     }, 190);
   });
-  $("#search-area").hide();
-  $("#loadsearch").hide();
-  $u.alert({
+   $u.alert({
     align: "center",
     title: "Ubeyin search [beta]",
     message: "Welcome to ubeyin search. Explore more, Find any discussions, and read any articles in Nother search. Free for all.",
     button: "Hide"
   });
+  $("#search-area").hide();
+  document.getElementById("loadsearch").style.display = "none";
 });
 function searching1(_this) {
   if ($("#search").val()) {
