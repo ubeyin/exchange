@@ -19,9 +19,7 @@ body, html {
 .wrapper {
   position: absolute;
   top: 52px;
-  padding: 0;
-  width: 100%;
-  height: auto;
+  left: 0;
 }
 .banner {
   padding: 30px;
@@ -38,11 +36,11 @@ body, html {
   width: 200px;
 }
 .container1 {
-  padding: 10px;
   text-align: center;
 }
 .wrapper1 {
   padding: 30px;
+  margin-top: 16px;
 }
 .learn-more {
   width: 160px;
@@ -81,11 +79,15 @@ body, html {
   margin-top: 16px;
   text-align: center;
 }
-td h5, td h6 {
-  line-height: 30px;
+td p {
+  line-height: 31px;
   margin-right: 10px;
 }
 td p {
   padding: 20px;
   font-size: 19px;
+}
+.gb {
+  border-radius: 0.3rem;
+  box-shadow: 0 0 3px lightgrey;
 }
