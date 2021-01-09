@@ -86,6 +86,7 @@ td h5, td h6 {
   line-height: 30px;
   margin-right: 10px;
 }
-td {
+td p {
   padding: 20px;
+  font-size: 19px;
 }
