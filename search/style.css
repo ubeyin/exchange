@@ -71,7 +71,7 @@ body, html {
 }
 .wrapper3 {
   padding: 30px;
-  margin-top: 16px;
+  margin: 16px;
   text-align: center;
   width: 100%;
   height: auto;
@@ -89,7 +89,4 @@ td h5, td h6 {
 td p {
   padding: 20px;
   font-size: 19px;
-}
-table {
-  margin: 17px;
 }
