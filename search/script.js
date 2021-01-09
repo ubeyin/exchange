@@ -1,4 +1,4 @@
-// https://notherweb.github.io/search
+// https://ubeyin.github.io/search
 
 $(document).ready(function(w) {
   $("#get-started").click(function (_this) {
