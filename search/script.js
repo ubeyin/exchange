@@ -33,7 +33,7 @@ function searching1(_this) {
     .then(function(response) {
       $("#search-area").show();
       for (var i = 0; i < response.query.search.length; i++) {
-        results += '<tr><td style="min-width:120px"><p>'+response.query.search[i].title+'</p></td><td><p style="font-size: 16px">'+response.query.search[i].snippet+'....<br><a href= "http://en.wikipedia.org/wiki?curid='+response.query.search[i].pageid+'" target="_parent"> Read more </a></p></td> </tr>'+"<br><br>";
+        results += '<tr style="font-size: 14px"><td style="min-width:120px"><p style="font-size: 14px">'+response.query.search[i].title+'</p></td><td><p style="font-size: 14px">'+response.query.search[i].snippet+'....<br><a href= "http://en.wikipedia.org/wiki?curid='+response.query.search[i].pageid+'" target="_parent"> Read more </a></p></td> </tr>'+"<br><br>";
       }
       document.getElementById('results').innerHTML = results;
     })
@@ -63,7 +63,7 @@ function searching2(_this) {
         for (var k = 0; k < response.items[i].tags.length; k++) {
           tags += '<span class="badge bg-danger" style="margin-right: 10px;">'+response.items[i].tags[k]+'</span>';
         }
-        results += '<tr><td style="min-width:120px"><p><img style="width: 30px; height: 30px; border-radius:100rem; background: #eee;" src="'+response.items[i].owner.profile_image+'"/><br>'+response.items[i].owner.display_name+'<br><a href= "'+response.items[i].link+'" target="_parent"> Read more </a></p></td> <td><p>'+response.items[i].title+'<br><i class="fa fa-comments"></i> '+answer+'<i style="padding-left:20px"></i>'+'<i class="fa fa-eye"></i> '+view+'<br>'+tags+'</p></td></tr>'+"<br><br>";
+        results += '<tr style="font-size: 14px"><td style="min-width:120px"><p style="font-size: 14px"><img style="width: 30px; height: 30px; border-radius:100rem; background: #eee;" src="'+response.items[i].owner.profile_image+'"/><br>'+response.items[i].owner.display_name+'<br><a href= "'+response.items[i].link+'" target="_parent"> Read more </a></p></td> <td><p style="font-size: 14px">'+response.items[i].title+'<br><i class="fa fa-comments"></i> '+answer+'<i style="padding:10px;padding-left:15px"></i>'+'<i class="fa fa-eye"></i> '+view+'<br>'+tags+'</p></td></tr>'+"<br><br>";
       }
       document.getElementById('results').innerHTML = results;
     })
