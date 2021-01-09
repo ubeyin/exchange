@@ -21,9 +21,7 @@ body, html {
   top: 52px;
   left: 0;
   right: 0;
-  padding: 10px;
-  margin: 10px;
-  width: 90%;
+  padding: 0;
   height: auto;
 }
 .banner {
@@ -41,7 +39,7 @@ body, html {
   width: 200px;
 }
 .container1 {
-  padding: 0px;
+  padding: 10px;
   text-align: center;
 }
 .wrapper1 {
@@ -73,7 +71,7 @@ body, html {
 }
 .wrapper3 {
   padding: 30px;
-  margin: 16px;
+  margin-top: 16px;
   text-align: center;
   width: 100%;
   height: auto;
