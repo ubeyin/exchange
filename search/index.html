@@ -44,8 +44,8 @@
         <button class="btn btn-danger align-middle get-started" type="submit" id="get-started">Get started</button>
       </div>
       <div class="container container1">
-        <div class="container wrapper2 bg-light">
-          <h2>Search here</h2><br>
+        <div class="container wrapper2 bg-light gb">
+          <h2>Search</h2><br>
           <input type="text" name="search" id="search" placeholder="Search any topics" value="" class="form-control" /><br>
 
           <div class="types">
@@ -53,13 +53,16 @@
             <button onclick="searching1()" class="btn btn-danger" style="margin-left: 10px">Articles</button>
           </div>
         </div>
-        <div class="container wrapper3 bg-light" id="search-area" style="padding:1px">
-          <table class="table table-striped">
+        <div class="spinner-border m-5" role="status" id="loadsearch">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="container wrapper3 bg-light gb" id="search-area" style="padding:1px">
+          <table class="table table-hover">
             <tbody id="results">
             </tbody>
           </table>
-       </div>
-        <div class="container wrapper1 bg-light">
+        </div>
+        <div class="container wrapper1 bg-light gb">
           <i class="fa fa-search f1"></i>
           <h3 class="f11">Find any topics</h3>
           <p>
@@ -79,7 +82,7 @@
           <button class="btn btn-success align-middle learn-more" type="submit">Learn more</button>
         </div>
       </div>
-      <div class="container wrapper-cp bg-danger" style="width:100%">
+      <div class="container wrapper-cp bg-danger">
         <p style="color: #fff;">
           Copyright &copy; <script>
             document.write(new Date().getFullYear());
