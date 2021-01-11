@@ -204,10 +204,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="container wrapper-cp bg-danger">
         <p style="color: #fff;">
-          Copyright &copy; <script>
-            document.write(new Date().getFullYear());
-          </script>
-          by Ubeyin llc.
+          Copyright &copy; <span id="year">current year</span> by Ubeyin llc.
         </p>
       </div>
     </div>
@@ -217,5 +214,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </nav>
   </div>
+  <script>
+    document.getElementById("year").innerHTML = new Date().getFullYear();
+  </script>
 </body>
 </html>
