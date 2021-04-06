@@ -1,10 +1,10 @@
 {
-   apiKey: "AIzaSyAE9eqPw5-XTBwx0gIRZGpKxftLm8uS6NU",
-   authDomain: "ubeyin-data.firebaseapp.com",
-   databaseURL: "https://ubeyin-data-default-rtdb.firebaseio.com",
-   projectId: "ubeyin-data",
-   storageBucket: "ubeyin-data.appspot.com",
-   messagingSenderId: "154658789445",
-   appId: "1:154658789445:web:ab9dde4fd5e795c4d62b2c",
-   measurementId: "G-6W9W2FJW3X",
+   "apiKey": "AIzaSyAE9eqPw5-XTBwx0gIRZGpKxftLm8uS6NU",
+   "authDomain": "ubeyin-data.firebaseapp.com",
+   "databaseURL": "https://ubeyin-data-default-rtdb.firebaseio.com",
+   "projectId": "ubeyin-data",
+   "storageBucket": "ubeyin-data.appspot.com",
+   "messagingSenderId": "154658789445",
+   "appId": "1:154658789445:web:ab9dde4fd5e795c4d62b2c",
+   "measurementId": "G-6W9W2FJW3X",
 }
