@@ -1,116 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Ubeyin Authentication</title>
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+  <title>Page title</title>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+  <script src="/__/init.js"></script>
 </head>
 <body>
-    <h2>SPA Authentication Sample</h2>
-    <p>
-        Welcome to our page!
-    </p>
-    <button id="btn-login" disabled="" onclick="login()">Log in</button>
-    <button id="btn-logout" disabled="true" onclick="logout()">Log out</button>
+  <input type="email" id="email" placeholder="Email address">
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="signup()">Sign up</button>
+  <button onclick="signin()">Sign in</button>
+  <button onclick="google()">Sign in with google</button>
+  <br><br>
+  <button onclick="signout()">Sign out</button>
 
-    <!-- ... -->
-    <div class="hidden" id="gated-content">
-        <p>
-            You're seeing this content because you're currently
-            <strong>logged in</strong>.
-        </p>
-        <label>
-            Access token:
-            <pre id="ipt-access-token"></pre>
-        </label>
-        <label>
-            User profile:
-            <pre id="ipt-user-profile"></pre>
-        </label>
-    </div>
+  <script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyAE9eqPw5-XTBwx0gIRZGpKxftLm8uS6NU",
+        authDomain: "ubeyin-data.firebaseapp.com",
+        databaseURL: "https://ubeyin-data-default-rtdb.firebaseio.com",
+        projectId: "ubeyin-data",
+        storageBucket: "ubeyin-data.appspot.com",
+        messagingSenderId: "154658789445",
+        appId: "1:154658789445:web:ab9dde4fd5e795c4d62b2c",
+        measurementId: "G-6W9W2FJW3X"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    
+    var f = firebase;
+    var auth = f.auth();
+    var database = firebase.database();
+     
+   
 
-    <script type="text/javascript" charset="utf-8">
-        let auth0 = null; // ..
+    if (f) {
+      console.info(f);
+    } else {
+      console.error("Error! firebase is not located.");
+    }
 
-        const fetchAuthConfig = () => fetch("/auth_config.json"); // ..
+    function signup() {
+      var e = document.getElementById("email").value;
+      var p = document.getElementById("password").value;
+      firebase.auth().createUserWithEmailAndPassword(e, p)
+      .then((userCredential) => {
+        // Signed in
+        var user = userCredential.user;
 
-        const configureClient = async () => {
-            const response = await fetchAuthConfig();
-            const config = await response.json();
+        writeUserData(user.uid, "", user.email, "");
+        alert("Welcome dear, "+user.email);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-            auth0 = await createAuth0Client({
-                domain: config.domain,
-                client_id: config.clientId
-            });
-        }; // ..
+        alert(error.message);
+      });
+    }
 
-        const login = async () => {
-            await auth0.loginWithRedirect({
-                redirect_uri: window.location.origin
-            });
-        };
-        // ..
+    function signin() {
+      var e = document.getElementById("email").value;
+      var p = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(e, p)
+      .then((userCredential) => {
+        // Signed in
+        var user = userCredential.user;
+        alert("Welcome back, "+user.email);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-        window.onload = function() {
-            await configureClient();
+        alert(error.message);
+      });
+    }
 
-            // .. code ommited for brevity
 
-            updateUI();
+    function google() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+      firebase.auth().useDeviceLanguage();
+      provider.setCustomParameters({
+        'login_hint': 'user@gmail.com'
+      });
+      firebase.auth()
+      .signInWithRedirect(provider)
+      .then((result) => {
+        var credential = result.credential;
+        var user = result.user;
 
-            const isAuthenticated = await auth0.isAuthenticated();
+      }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-            if (isAuthenticated) {
-                // show the gated content
-                return;
-            }
+        var email = error.email;
+        var credential = error.credential;
 
-            // NEW - check for the code and state parameters
-            const query = window.location.search;
-            if (query.includes("code=") && query.includes("state=")) {
+        alert(errorMessage);
+      });
+    }
 
-                // Process the login state
-                await auth0.handleRedirectCallback();
+    /*
+    firebase.auth().signInWithPopup(provider);
+  */
 
-                updateUI();
 
-                // Use replaceState to redirect the user away and remove the querystring parameters
-                window.history.replaceState({}, document.title, "/");
-            }
-        };
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        var uid = user.uid;
+        console.log(firebase.database().ref('users/'+uid));
+        alert("Welcome back, "+user.email+"\n Your id: "+uid);
+      } else {
+        // User is signed out
+        alert("Please, join now");
+      }
+    });
 
-        // ..// public/js/app.js
 
-        const logout = () => {
-            auth0.logout({
-                returnTo: window.location.origin
-            });
-        }
+    function signout() {
+      firebase.auth().signOut().then(() => {
+        alert("Sign-out successful.");
+      }).catch((error) => {
+        alert("An error happened.");
+      });
+    }
 
-        const updateUI = async () => {
-            const isAuthenticated = await auth0.isAuthenticated();
+    function writeUserData(userId, name, email, imageUrl) {
+      firebase.database().ref('users/' + userId).set({
+        username: name,
+        email: email,
+        profile_picture: imageUrl
+      });
+    }
 
-            document.getElementById("btn-logout").disabled = !isAuthenticated;
-            document.getElementById("btn-login").disabled = isAuthenticated;
-
-            // NEW - add logic to show/hide gated content after authentication
-            if (isAuthenticated) {
-                document.getElementById("gated-content").classList.remove("hidden");
-
-                document.getElementById(
-                    "ipt-access-token"
-                ).innerHTML = await auth0.getTokenSilently();
-
-                document.getElementById("ipt-user-profile").textContent = JSON.stringify(
-                    await auth0.getUser()
-                );
-
-            } else {
-                document.getElementById("gated-content").classList.add("hidden");
-            }
-        };
-
-        // ..
-    </script>
+  </script>
 </body>
 </html>
