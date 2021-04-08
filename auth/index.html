@@ -1,144 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Page title</title>
-  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
-  <script src="/__/init.js"></script>
+      <title>Ubeyin web - Do more, Get Anythings</title>
+      <link rel="stylesheet" href="main.css">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Dela+Gothic+One&family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
-  <input type="email" id="email" placeholder="Email address">
-  <input type="password" id="password" placeholder="Password"><br>
-  <button onclick="signup()">Sign up</button>
-  <button onclick="signin()">Sign in</button>
-  <button onclick="google()">Sign in with google</button>
-  <br><br>
-  <button onclick="signout()">Sign out</button>
+      <nav id="ub-nav">
+							<div style="margin-left:10px;margin-top:1px;font-size:20px;color:#1a1a1a;font-weight:bold">
+      Ubeyin<span style="color:#ff152a;font-size:26px">•</span>
+          </div>
+          <svg viewBox="0 0 120 80" width="30" height="30" style="position:absolute;top: 10px;right:15px">
+            <rect width="111" height="13" fill="#1a1a1a"
+        rx="8"></rect>
+            <rect y="30" width="111" height="13" fill="#1a1a1a" rx="8"></rect>
+            <rect y="60" width="111" height="13" fill="#1a1a1a" rx="8"></rect>
+          </svg>
+      </nav>
+				
+				<section class="ubeyin--form" title="ubeyin sign up form">
+        <h3 id="signup" style="margin-top:5px">Sign up</h3>
+        <input type="text" class="ubeyin--br-1x" name="signup-username" id="signup-username" placeholder="Username"   /><br>
+        <input type="email" class="ubeyin--br-1x" name="signup-email" id="email" placeholder="Email address"   /><br>
+        <input type="password" class="ubeyin--br-1x" name="signup-pass" id="password" placeholder="Password"   /><br><br>
+        <input type="checkbox" class="ubeyin--br-3x" name="signup-term" id="signup-term"   />
+        <label for="signup-term">I am accepted all the terms and conditions and i am not a robot.</label>
 
-  <script>
-    var firebaseConfig = {
-        apiKey: "AIzaSyAE9eqPw5-XTBwx0gIRZGpKxftLm8uS6NU",
-        authDomain: "ubeyin-data.firebaseapp.com",
-        databaseURL: "https://ubeyin-data-default-rtdb.firebaseio.com",
-        projectId: "ubeyin-data",
-        storageBucket: "ubeyin-data.appspot.com",
-        messagingSenderId: "154658789445",
-        appId: "1:154658789445:web:ab9dde4fd5e795c4d62b2c",
-        measurementId: "G-6W9W2FJW3X"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    
-    var f = firebase;
-    var auth = f.auth();
-    var database = firebase.database();
-     
-   
-
-    if (f) {
-      console.info(f);
-    } else {
-      console.error("Error! firebase is not located.");
-    }
-
-    function signup() {
-      var e = document.getElementById("email").value;
-      var p = document.getElementById("password").value;
-      firebase.auth().createUserWithEmailAndPassword(e, p)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-
-        writeUserData(user.uid, "", user.email, "");
-        alert("Welcome dear, "+user.email);
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        alert(error.message);
-      });
-    }
-
-    function signin() {
-      var e = document.getElementById("email").value;
-      var p = document.getElementById("password").value;
-      firebase.auth().signInWithEmailAndPassword(e, p)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        alert("Welcome back, "+user.email);
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        alert(error.message);
-      });
-    }
-
-
-    function google() {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-      firebase.auth().useDeviceLanguage();
-      provider.setCustomParameters({
-        'login_hint': 'user@gmail.com'
-      });
-      firebase.auth()
-      .signInWithRedirect(provider)
-      .then((result) => {
-        var credential = result.credential;
-        var user = result.user;
-
-      }).catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        var email = error.email;
-        var credential = error.credential;
-
-        alert(errorMessage);
-      });
-    }
-
-    /*
-    firebase.auth().signInWithPopup(provider);
-  */
-
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        var uid = user.uid;
-        console.log(firebase.database().ref('users/'+uid));
-        alert("Welcome back, "+user.email+"\n Your id: "+uid);
-      } else {
-        // User is signed out
-        alert("Please, join now");
-      }
-    });
-
-
-    function signout() {
-      firebase.auth().signOut().then(() => {
-        alert("Sign-out successful.");
-      }).catch((error) => {
-        alert("An error happened.");
-      });
-    }
-
-    function writeUserData(userId, name, email, imageUrl) {
-      firebase.database().ref('users/' + userId).set({
-        username: name,
-        email: email,
-        profile_picture: imageUrl
-      });
-    }
-
-  </script>
+        <button class="ubeyin--btn-4x ubeyin--br-3x" style="width:86%;margin-bottom:0" id="signup-btnx" onclick="signup()">Sign up now for free</button>
+        <button class="ubeyin--btn-4x" style="width:86%" id="signin-btn" onclick="signInO()">Already have an account?</button>
+        <button class="ubeyin--btn-4x ubeyin--br-3x" style="width:86%;display:none;margin-bottom:0" id="signin-btnx" onclick="signin()">Log in and back to home</button>
+        <button class="ubeyin--btn-4x" style="width:86%;display:none" id="signup-btn" onclick="signUpO()">Havn't any account?</button>
+      </section>
+				
+				<script type="text/javascript" src="app.js"></script>
+				<script>
+								// console.log(document.documentElement.innerHTML);
+				</script>
 </body>
 </html>
