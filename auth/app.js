@@ -13,7 +13,7 @@ window.onload = function() {
     config = {
       apiKey: "AIzaSyAE9eqPw5-XTBwx0gIRZGpKxftLm8uS6NU",
       authDomain: "ubeyin-data.firebaseapp.com",
-      databaseURL: "https://ubeyin-data-default-rtdb.firebaseio.com",
+      databaseURL: "ubeyin-data-default-rtdb.firebaseio.com",
       projectId: "ubeyin-data",
       storageBucket: "ubeyin-data.appspot.com",
       messagingSenderId: "154658789445",
@@ -28,7 +28,7 @@ window.onload = function() {
 setInterval(function () {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      $("form").style.display = "none";
+      $("form-x").style.display = "none";
     } else {
       $("form").style.display = "block";
     }
@@ -41,14 +41,15 @@ function signup() {
   var n = $("username").value;
   firebase.auth().createUserWithEmailAndPassword(e, p)
   .then((userCredential) => {
-    $("form").style.display = "none";
     $auth_data({
       id: userCredential.user.uid,
       name: n,
       email: userCredential.user.email,
-      avater: "Unavailable"
+      avater: "https://ubeyin.github.io/icon/ubeyin.png"
     });
-    alert("Welcome dear, "+userCredential.user.email);
+    $welcome();
+    $("form-x").style.display = "none";
+    $("form-y").style.display = "block";
   })
   .catch((error) => {
     var errorCode = error.code;
@@ -62,8 +63,10 @@ function signin() {
   var p = $("password").value;
   firebase.auth().signInWithEmailAndPassword(e, p)
   .then((userCredential) => {
-    $("form").style.display = "none";
+    $("form-x").style.display = "none";
+    $("form-y").style.display = "block";
     alert("Welcome back, "+userCredential.user.email);
+    $welcome(userCredential.user.uid);
   })
   .catch((error) => {
     var errorCode = error.code;
@@ -102,3 +105,23 @@ function $(x) {
 function $auth_data(x) {
   firebase.database().ref('users/' + x.id).set(x);
 }
+function $welcome(userId){
+  firebase.database().child("users").child(userId).get().then(function(snapshot) {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+  }
+  else {
+    console.log("No data available");
+  }
+}).catch(function(error) {
+  console.error(error);
+});
+}
+
+/*
+var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
+starCountRef.on('value', (snapshot) => {
+  const data = snapshot.val();
+  updateStarCount(postElement, data);
+});
+*/
