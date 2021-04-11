@@ -29,8 +29,10 @@ setInterval(function () {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       $("form-x").style.display = "none";
+      $("form-y").style.display = "block";
     } else {
-      $("form").style.display = "block";
+      $("form-x").style.display = "block";
+      $("form-z").style.display = "none";
     }
   });
 }, 500);
@@ -39,6 +41,8 @@ function signup() {
   var e = $("email").value;
   var p = $("password").value;
   var n = $("username").value;
+  $("form-z").style.display = "block";
+  $("form-x-copy").style.display = "none";
   firebase.auth().createUserWithEmailAndPassword(e, p)
   .then((userCredential) => {
     $auth_data({
@@ -47,31 +51,50 @@ function signup() {
       email: userCredential.user.email,
       avater: "https://ubeyin.github.io/icon/ubeyin.png"
     });
-    $welcome();
+    $welcome(userCredential.user.uid, "You have been successfully created an account. Your account id is <i>"+userCredential.user.uid+"</i><br>Now press the button to gets started and make a new discover.");
     $("form-x").style.display = "none";
     $("form-y").style.display = "block";
+    $("form-z").style.display = "none";
   })
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
-    alert(error.message);
+    console.error(error.message);
+    $("form-z").style.display = "none";
+    $("form-w").style.display = "block";
+    $("form-w-e1").innerHTML = errorCode;
+    $("form-w-e2").innerHTML = errorMessage;
+    $("form-w-btn").onclick = function(){
+         $("form-w").style.display = "none";
+         $("form-x-copy").style.display = "block";
+    }
   });
 }
 
 function signin() {
   var e = $("email").value;
   var p = $("password").value;
+  $("form-z").style.display = "block";
+  $("form-x-copy").style.display = "none";
   firebase.auth().signInWithEmailAndPassword(e, p)
   .then((userCredential) => {
+    $welcome(userCredential.user.uid, "Welcome back to ubeyin. You have been logged in to your account to <i>"+e+"</i><br>Now press the button to gets started and make a new discover.");
     $("form-x").style.display = "none";
     $("form-y").style.display = "block";
-    alert("Welcome back, "+userCredential.user.email);
-    $welcome(userCredential.user.uid);
+    $("form-z").style.display = "none";
   })
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
-    alert(error.message);
+    console.error(error.message);
+    $("form-z").style.display = "none";
+    $("form-w").style.display = "block";
+    $("form-w-e1").innerHTML = errorCode;
+    $("form-w-e2").innerHTML = errorMessage;
+    $("form-w-btn").onclick = function(){
+         $("form-w").style.display = "none";
+         $("form-x-copy").style.display = "block";
+    }
   });
 }
 
@@ -105,9 +128,13 @@ function $(x) {
 function $auth_data(x) {
   firebase.database().ref('users/' + x.id).set(x);
 }
-function $welcome(userId){
-  firebase.database().child("users").child(userId).get().then(function(snapshot) {
+function $welcome(userId, message){
+  firebase.database().ref("users/" + userId).get().then(function(snapshot) {
   if (snapshot.exists()) {
+    $("form-y-img").src = snapshot.val().avater;
+    $("form-y-e1").innerHTML = "Welcome <i>"+snapshot.val().name+"</i>";
+    $("form-y-e2").innerHTML = message;
+    
     console.log(snapshot.val());
   }
   else {

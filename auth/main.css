@@ -1,6 +1,6 @@
 body {
   transition: 0.2s ease;
-  min-height: 800px;
+  min-height: 790px;
   margin: 0;
 }
 * {
@@ -63,13 +63,13 @@ body {
   text-align: center;
   margin: auto;
   margin-top: -170px;
-  padding: 20px;
+  padding: 30px;
   animation: 0.21s linear-up linear;
 }
-.form-x > h1,.form-x > h2, .form-x > h3, .form-x > h4, .form-x > h5,.form-x > h6 {
+.form-x-copy > h1,.form-x-copy > h2, .form-x-copy > h3, .form-x-copy > h4, .form-x-copy > h5,.form-x-copy > h6 {
   font-size: 30px;
 }
-.form-x > input[type=text], .form-x > input[type=email], .form-x > input[type=password], .form-x > input[type=url] {
+.form-x-copy > input[type=text], .form-x-copy > input[type=email], .form-x-copy > input[type=password], .form-x-copy > input[type=url] {
   width: 80%;
   height: auto;
   padding: 10px;
@@ -80,14 +80,7 @@ body {
   color: #333;
   transition: 1s all ease;
 }
-.form-x > input[type=checkbox] {
-  outline: none;
-  transform: scale(1.1);
-}
-.form-x > label {
-  font-size: 17px;
-}
-.form-x > input:focus {
+.form-x-copy > input:focus {
   box-shadow: 0 0 5px lightgrey;
 }
 .ubeyin--btn-5x,.ubeyin--btn-4x {
