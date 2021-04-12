@@ -1,12 +1,10 @@
-console.info("'app-ubeyin.js' is ready.");
-
 var Ubeyin;
-var init = {};
+var init = false;
 var config = {};
 
-var e = $("email").value;
-var p = $("password").value;
-var n = $("username").value;
+var e = $ID_NAME("email").value;
+var p = $ID_NAME("password").value;
+var n = $ID_NAME("username").value;
 
 window.onload = function() {
   setTimeout(function() {
@@ -28,124 +26,144 @@ window.onload = function() {
 setInterval(function () {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      $("form-x").style.display = "none";
-      $("form-y").style.display = "block";
-      $("form-z").style.display = "none";
-      $welcome(user.uid, "Welcome back to ubeyin. You are current logged in to <i>"+user.email+"</i><br>Now press the button to gets started and make a new discover.");
+      $ID_NAME("form-x").style.display = "none";
+      $ID_NAME("form-z").style.display = "none";
+      $ID_NAME("form-y").style.display = "block";
+
+      window.localStorage.setItem('USER_EMAIL', user.email);
+      window.localStorage.setItem('USER_ID', user.uid);
+
+      if (init == false) {
+        $USER_DATA(user.uid, "Welcome back to ubeyin. You are current logged in to <i>"+user.email+"</i><br>Now press the button to gets started and make a new discover.");
+      }
     } else {
-      $("form-x").style.display = "block";
-      $("form-y").style.display = "none";
-      $("form-z").style.display = "none";
+      $ID_NAME("form-x").style.display = "block";
+      $ID_NAME("form-y").style.display = "none";
+      $ID_NAME("form-z").style.display = "none";
     }
   });
-}, 500);
+}, 100);
 
-function signup() {
-  var e = $("email").value;
-  var p = $("password").value;
-  var n = $("username").value;
-  $("form-z").style.display = "block";
-  $("form-x-copy").style.display = "none";
+function $SIGN_UP() {
+  var e = $ID_NAME("email").value;
+  var p = $ID_NAME("password").value;
+  var n = $ID_NAME("username").value;
+  $ID_NAME("form-z").style.display = "block";
+  $ID_NAME("form-x-copy").style.display = "none";
   firebase.auth().createUserWithEmailAndPassword(e, p)
   .then((userCredential) => {
-    $auth_data({
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    $SET_DATA({
       id: userCredential.user.uid,
       name: n,
       email: userCredential.user.email,
-      avater: "https://ubeyin.github.io/icon/ubeyin.png"
+      avater: "https://ubeyin.github.io/icon/ubeyin.png",
+      date: dateTime
     });
-    $welcome(userCredential.user.uid,
-      "You have been successfully created an account. Your account id is <i>"+userCredential.user.uid+"</i><br>Now press the button to gets started and make a new discover.");
-    $("form-x").style.display = "none";
-    $("form-y").style.display = "block";
-    $("form-z").style.display = "none";
+    $USER_DATA(userCredential.user.uid,
+      "You have been successfully created an account. Your account id is <i>"+userCredential.user.uid+"</i><br>Now press the button to gets started and make a new discover.",
+      "You have been successfully created an account. <br>Now press the button to gets started and make a new discover.");
+    $ID_NAME("form-x").style.display = "none";
+    $ID_NAME("form-y").style.display = "block";
+    $ID_NAME("form-z").style.display = "none";
+    init = true;
   })
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
     console.error(error.message);
-    $("form-z").style.display = "none";
-    $("form-w").style.display = "block";
-    $("form-w-e1").innerHTML = errorCode;
-    $("form-w-e2").innerHTML = errorMessage;
-    $("form-w-btn").onclick = function() {
-      $("form-w").style.display = "none";
-      $("form-x-copy").style.display = "block";
+    $ID_NAME("form-z").style.display = "none";
+    $ID_NAME("form-w").style.display = "block";
+    $ID_NAME("form-w-e1").innerHTML = errorCode;
+    $ID_NAME("form-w-e2").innerHTML = errorMessage;
+    $ID_NAME("form-w-btn").onclick = function() {
+      $ID_NAME("form-w").style.display = "none";
+      $ID_NAME("form-x-copy").style.display = "block";
     }
   });
 }
 
-function signin() {
-  var e = $("email").value;
-  var p = $("password").value;
-  $("form-z").style.display = "block";
-  $("form-x-copy").style.display = "none";
+function $SIGN_IN() {
+  var e = $ID_NAME("email").value;
+  var p = $ID_NAME("password").value;
+  $ID_NAME("form-z").style.display = "block";
+  $ID_NAME("form-x-copy").style.display = "none";
   firebase.auth().signInWithEmailAndPassword(e, p)
   .then((userCredential) => {
-    $welcome(userCredential.user.uid,
-      "Welcome back to ubeyin. You have been logged in to your account to <i>"+e+"</i><br>Now press the button to gets started and make a new discover.");
-    $("form-x").style.display = "none";
-    $("form-y").style.display = "block";
-    $("form-z").style.display = "none";
+    $USER_DATA(userCredential.user.uid,
+      "Welcome back to ubeyin. You have been logged in to your account to <i><input value='"+e+"' disabled /></i><br>Now press the button to gets started and make a new discover.",
+      "Welcome back to ubeyin. You have been logged in to your account.<br>Now press the button to gets started and make a new discover.");
+    $ID_NAME("form-x").style.display = "none";
+    $ID_NAME("form-y").style.display = "block";
+    $ID_NAME("form-z").style.display = "none";
+    init = true;
   })
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
     console.error(error.message);
-    $("form-z").style.display = "none";
-    $("form-w").style.display = "block";
-    $("form-w-e1").innerHTML = errorCode;
-    $("form-w-e2").innerHTML = errorMessage;
-    $("form-w-btn").onclick = function() {
-      $("form-w").style.display = "none";
-      $("form-x-copy").style.display = "block";
+    $ID_NAME("form-z").style.display = "none";
+    $ID_NAME("form-w").style.display = "block";
+    $ID_NAME("form-w-e1").innerHTML = errorCode;
+    $ID_NAME("form-w-e2").innerHTML = errorMessage;
+    $ID_NAME("form-w-btn").onclick = function() {
+      $ID_NAME("form-w").style.display = "none";
+      $ID_NAME("form-x-copy").style.display = "block";
     }
   });
 }
 
-function signInO() {
-  $("username").style.display = "none";
-  $("signin-btnx").style.display = "";
-  $("signin-btn").style.display = "none";
-  $("signup-btnx").style.display = "none";
-  $("signup-btn").style.display = "";
-  $("signup").innerHTML = "Sign In";
+function $GO_SIGNIN() {
+  $ID_NAME("username").style.display = "none";
+  $ID_NAME("signin-btnx").style.display = "";
+  $ID_NAME("signin-btn").style.display = "none";
+  $ID_NAME("signup-btnx").style.display = "none";
+  $ID_NAME("signup-btn").style.display = "";
+  $ID_NAME("signup").innerHTML = "Sign In";
 }
 
-function signUpO() {
-  $("username").style.display = "";
-  $("signin-btnx").style.display = "none";
-  $("signin-btn").style.display = "";
-  $("signup-btnx").style.display = "";
-  $("signup-btn").style.display = "none";
-  $("signup").innerHTML = "Sign Up";
+function $GO_SIGNUP() {
+  $ID_NAME("username").style.display = "";
+  $ID_NAME("signin-btnx").style.display = "none";
+  $ID_NAME("signin-btn").style.display = "";
+  $ID_NAME("signup-btnx").style.display = "";
+  $ID_NAME("signup-btn").style.display = "none";
+  $ID_NAME("signup").innerHTML = "Sign Up";
 }
-function signout() {
+function $SIGN_OUT() {
   firebase.auth().signOut().then(() => {
     alert("Sign-out successful.");
   }).catch((error) => {
     alert("An error happened.");
   });
 }
-function $(x) {
+function $ID_NAME(x) {
   return document.getElementById(x);
 }
-function $auth_data(x) {
+function $SET_DATA(x) {
   firebase.database().ref('users/' + x.id).set(x);
 }
-function $welcome(userId, message) {
+function $USER_DATA(userId, message1, message2) {
   firebase.database().ref("users/" + userId).get().then(function(snapshot) {
     if (snapshot.exists()) {
-      $("form-y-img").src = snapshot.val().avater;
-      $("form-y-e1").innerHTML = "Welcome <i>"+snapshot.val().name+"</i>";
-      $("form-y-e2").innerHTML = message;
-
-      console.log(snapshot.val());
+      $ID_NAME("form-y-img").src = snapshot.val().avater;
+      $ID_NAME("form-y-e1").innerHTML = "Welcome <i>"+snapshot.val().name+"</i>";
+      $ID_NAME("form-y-e2").innerHTML = message1;
+      $ID_NAME("form-y-btn").style.display = "block";
     } else {
-      console.log("No data available");
+      $ID_NAME("form-y-img").src = snapshot.val().avater;
+      $ID_NAME("form-y-e1").innerHTML = "Welcome <i>"+snapshot.val().name+"</i>";
+      $ID_NAME("form-y-e2").innerHTML = message2;
+      $ID_NAME("form-y-btn").style.display = "block";
     }
   }).catch(function(error) {
-    console.error(error);
+    $ID_NAME("form-y-img").src = snapshot.val().avater;
+    $ID_NAME("form-y-e1").innerHTML = "Welcome <i>User</i>";
+    $ID_NAME("form-y-e2").innerHTML = "Somethings error occurred! your profile data is not loaded. Error: "+error+"<br>You can go to home by press the button.";
+    $ID_NAME("form-y-btn").style.display = "block";
   });
 }
 
