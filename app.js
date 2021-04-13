@@ -30,9 +30,6 @@ setInterval(function () {
       $ID_NAME("form-z").style.display = "none";
       $ID_NAME("form-y").style.display = "block";
 
-      window.localStorage.setItem('USER_EMAIL', user.email);
-      window.localStorage.setItem('USER_ID', user.uid);
-
       if (init == false) {
         $USER_DATA(user.uid, "Welcome back to ubeyin. You are current logged in to <i>"+user.email+"</i><br>Now press the button to gets started and make a new discover.");
       }
@@ -109,7 +106,7 @@ function $SIGN_IN() {
     p)
   .then((userCredential) => {
     $USER_DATA(userCredential.user.uid,
-      "Welcome back to ubeyin. You have been logged in to your account to <i><input value='"+e+"' disabled /></i><br>Now press the button to gets started and make a new discover.",
+      "Welcome back to ubeyin. You have been logged in to your account to <i>"+e+"</i><br>Now press the button to gets started and make a new discover.",
       "Welcome back to ubeyin. You have been logged in to your account.<br>Now press the button to gets started and make a new discover.");
     $ID_NAME("form-x").style.display = "none";
     $ID_NAME("form-y").style.display = "block";
