@@ -50,40 +50,54 @@ function $SIGN_UP() {
   var n = $ID_NAME("username").value;
   $ID_NAME("form-z").style.display = "block";
   $ID_NAME("form-x-copy").style.display = "none";
-  firebase.auth().createUserWithEmailAndPassword(e, p)
-  .then((userCredential) => {
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
-    $SET_DATA({
-      id: userCredential.user.uid,
-      name: n,
-      email: userCredential.user.email,
-      avater: "https://ubeyin.github.io/icon/ubeyin.png",
-      date: dateTime
+  if (n != null && n.length >= 5 && n.length <= 18) {
+
+    firebase.auth().createUserWithEmailAndPassword(e, p)
+    .then((userCredential) => {
+
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date+' '+time;
+      $SET_DATA({
+        id: userCredential.user.uid,
+        name: n,
+        email: userCredential.user.email,
+        avater: "https://ubeyin.github.io/icon/ubeyin.png",
+        date: dateTime
+      });
+      $USER_DATA(userCredential.user.uid,
+        "You have been successfully created an account. Your account id is <i>"+userCredential.user.uid+"</i><br>Now press the button to gets started and make a new discover.",
+        "You have been successfully created an account. <br>Now press the button to gets started and make a new discover.");
+      $ID_NAME("form-x").style.display = "none";
+      $ID_NAME("form-y").style.display = "block";
+      $ID_NAME("form-z").style.display = "none";
+      init = true;
+
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.error(error.message);
+      $ID_NAME("form-z").style.display = "none";
+      $ID_NAME("form-w").style.display = "block";
+      $ID_NAME("form-w-e1").innerHTML = errorCode;
+      $ID_NAME("form-w-e2").innerHTML = errorMessage;
+      $ID_NAME("form-w-btn").onclick = function() {
+        $ID_NAME("form-w").style.display = "none";
+        $ID_NAME("form-x-copy").style.display = "block";
+      }
     });
-    $USER_DATA(userCredential.user.uid,
-      "You have been successfully created an account. Your account id is <i>"+userCredential.user.uid+"</i><br>Now press the button to gets started and make a new discover.",
-      "You have been successfully created an account. <br>Now press the button to gets started and make a new discover.");
-    $ID_NAME("form-x").style.display = "none";
-    $ID_NAME("form-y").style.display = "block";
-    $ID_NAME("form-z").style.display = "none";
-    init = true;
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.error(error.message);
+  } else {
     $ID_NAME("form-z").style.display = "none";
     $ID_NAME("form-w").style.display = "block";
-    $ID_NAME("form-w-e1").innerHTML = errorCode;
-    $ID_NAME("form-w-e2").innerHTML = errorMessage;
+    $ID_NAME("form-w-e1").innerHTML = "auth/weak_username";
+    $ID_NAME("form-w-e2").innerHTML = "Your username should be 6-18 characters.";
     $ID_NAME("form-w-btn").onclick = function() {
       $ID_NAME("form-w").style.display = "none";
       $ID_NAME("form-x-copy").style.display = "block";
     }
-  });
+  }
 }
 
 function $SIGN_IN() {
@@ -91,7 +105,8 @@ function $SIGN_IN() {
   var p = $ID_NAME("password").value;
   $ID_NAME("form-z").style.display = "block";
   $ID_NAME("form-x-copy").style.display = "none";
-  firebase.auth().signInWithEmailAndPassword(e, p)
+  firebase.auth().signInWithEmailAndPassword(e,
+    p)
   .then((userCredential) => {
     $USER_DATA(userCredential.user.uid,
       "Welcome back to ubeyin. You have been logged in to your account to <i><input value='"+e+"' disabled /></i><br>Now press the button to gets started and make a new discover.",
