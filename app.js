@@ -178,11 +178,3 @@ function $USER_DATA(userId, message1, message2) {
     $ID_NAME("form-y-btn").style.display = "block";
   });
 }
-
-/*
-var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
-starCountRef.on('value', (snapshot) => {
-  const data = snapshot.val();
-  updateStarCount(postElement, data);
-});
-*/
