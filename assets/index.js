@@ -1,4 +1,4 @@
-var Ubeyin;
+
 var init = false;
 var config = {};
 
