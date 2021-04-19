@@ -1,11 +1,5 @@
 let Auth;
 
-// All Variables
-
-$ = function(id) {
- return document.getElementById(id);
-};
-
 // All ID Names
 var ubNav = document.getElementById("ub-nav");
 var ubNavMenu = document.getElementById("ub-nav-menu");
@@ -15,6 +9,10 @@ var ubAuthForm = document.getElementById("ub-auth-form");
 var ubAuthAccList = document.getElementById("ub-auth-acc-list");
 var ubAuthAccListDiv = document.querySelector("#ub-auth-acc-list div");
 var ubAuthAddAcc = document.getElementById("ub-auth-add-acc");
+
+function $ID_NAME(x) {
+  return document.getElementById(x);
+}
 
 // More
 var config = {};
@@ -156,9 +154,6 @@ function $SIGN_OUT() {
   }).catch((error) => {
     
   });
-}
-function $ID_NAME(x) {
-  return document.getElementById(x);
 }
 function $SET_DATA(x) {
   firebase.database().ref('users/' + x.id).set(x);
