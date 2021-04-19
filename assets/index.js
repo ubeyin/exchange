@@ -1,5 +1,22 @@
+let Auth;
 
-var init = false;
+// All Variables
+
+$ = function(id) {
+ return document.getElementById(id);
+};
+
+// All ID Names
+var ubNav = document.getElementById("ub-nav");
+var ubNavMenu = document.getElementById("ub-nav-menu");
+var ubHome = document.getElementById("ub-home");
+var ubAuth = document.getElementById("ub-auth");
+var ubAuthForm = document.getElementById("ub-auth-form");
+var ubAuthAccList = document.getElementById("ub-auth-acc-list");
+var ubAuthAccListDiv = document.querySelector("#ub-auth-acc-list div");
+var ubAuthAddAcc = document.getElementById("ub-auth-add-acc");
+
+// More
 var config = {};
 
 var e = $ID_NAME("email").value;
@@ -27,15 +44,12 @@ setInterval(function () {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       $ID_NAME("form-x").style.display = "none";
-      $ID_NAME("form-z").style.display = "none";
-      $ID_NAME("form-y").style.display = "block";
-
-      if (init == false) {
-        $USER_DATA(user.uid, "Welcome back to ubeyin. You are current logged in to <i>"+user.email+"</i><br>Now press the button to gets started and make a new discover.");
-      }
+      $ID_NAME("form-x-copy").style.display = "none";
+      $ID_NAME("form-z").style.display = "block";
+      $USER_DATA(user.uid, user.email);
     } else {
+      ubAuth.style.display = "none";
       $ID_NAME("form-x").style.display = "block";
-      $ID_NAME("form-y").style.display = "none";
       $ID_NAME("form-z").style.display = "none";
     }
   });
@@ -63,14 +77,9 @@ function $SIGN_UP() {
         avater: "https://ubeyin.github.io/icon/ubeyin.png",
         date: dateTime
       });
-      $USER_DATA(userCredential.user.uid,
-        "You have been successfully created an account. Your account id is <i>"+userCredential.user.uid+"</i><br>Now press the button to gets started and make a new discover.",
-        "You have been successfully created an account. <br>Now press the button to gets started and make a new discover.");
+      $USER_DATA(userCredential.user.uid, userCredential.user.email);
       $ID_NAME("form-x").style.display = "none";
-      $ID_NAME("form-y").style.display = "block";
-      $ID_NAME("form-z").style.display = "none";
-      init = true;
-
+      $ID_NAME("form-z").style.display = "block";
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -105,13 +114,9 @@ function $SIGN_IN() {
   firebase.auth().signInWithEmailAndPassword(e,
     p)
   .then((userCredential) => {
-    $USER_DATA(userCredential.user.uid,
-      "Welcome back to ubeyin. You have been logged in to your account to <i>"+e+"</i><br>Now press the button to gets started and make a new discover.",
-      "Welcome back to ubeyin. You have been logged in to your account.<br>Now press the button to gets started and make a new discover.");
+    $USER_DATA(userCredential.user.uid, userCredential.user.email);
     $ID_NAME("form-x").style.display = "none";
-    $ID_NAME("form-y").style.display = "block";
-    $ID_NAME("form-z").style.display = "none";
-    init = true;
+    $ID_NAME("form-z").style.display = "block";
   })
   .catch((error) => {
     var errorCode = error.code;
@@ -147,9 +152,9 @@ function $GO_SIGNUP() {
 }
 function $SIGN_OUT() {
   firebase.auth().signOut().then(() => {
-    alert("Sign-out successful.");
+  //  window.location.href = window.location.href;
   }).catch((error) => {
-    alert("An error happened.");
+    
   });
 }
 function $ID_NAME(x) {
@@ -158,23 +163,21 @@ function $ID_NAME(x) {
 function $SET_DATA(x) {
   firebase.database().ref('users/' + x.id).set(x);
 }
-function $USER_DATA(userId, message1, message2) {
+function $USER_DATA(userId, email) {
   firebase.database().ref("users/" + userId).get().then(function(snapshot) {
+  ubAuth.style.display = "block";
+  ubAuthAccList.style.display = "block";
+  ubAuthAddAcc.style.display = "block";
     if (snapshot.exists()) {
-      $ID_NAME("form-y-img").src = snapshot.val().avater;
-      $ID_NAME("form-y-e1").innerHTML = "Welcome <i>"+snapshot.val().name+"</i>";
-      $ID_NAME("form-y-e2").innerHTML = message1;
-      $ID_NAME("form-y-btn").style.display = "block";
+        ubAuthAccListDiv.querySelector("p strong").innerHTML = snapshot.val().name;
+        ubAuthAccListDiv.querySelector("p span").innerHTML = email;
+        ubAuthAccListDiv.querySelector("img").src = snapshot.val().avater;
     } else {
-      $ID_NAME("form-y-img").src = snapshot.val().avater;
-      $ID_NAME("form-y-e1").innerHTML = "Welcome <i>"+snapshot.val().name+"</i>";
-      $ID_NAME("form-y-e2").innerHTML = message2;
-      $ID_NAME("form-y-btn").style.display = "block";
+        ubAuthAccListDiv.querySelector("p strong").innerHTML = "No data";
+        ubAuthAccListDiv.querySelector("p span").innerHTML = "Please delete your account and re-signup.";
+        ubAuthAccListDiv.querySelector("img").src = "https://ubeyin.github.io/icon/ubeyin.png";
     }
   }).catch(function(error) {
-    $ID_NAME("form-y-img").src = snapshot.val().avater;
-    $ID_NAME("form-y-e1").innerHTML = "Welcome <i>User</i>";
-    $ID_NAME("form-y-e2").innerHTML = "Somethings error occurred! your profile data is not loaded. Error: "+error+"<br>You can go to home by press the button.";
-    $ID_NAME("form-y-btn").style.display = "block";
+        
   });
 }
