@@ -24,14 +24,14 @@ var n = $ID_NAME("username").value;
 window.onload = function() {
   setTimeout(function() {
     config = {
-      apiKey: "AIzaSyAE9eqPw5-XTBwx0gIRZGpKxftLm8uS6NU",
-      authDomain: "ubeyin-data.firebaseapp.com",
-      databaseURL: "ubeyin-data-default-rtdb.firebaseio.com",
-      projectId: "ubeyin-data",
-      storageBucket: "ubeyin-data.appspot.com",
-      messagingSenderId: "154658789445",
-      appId: "1:154658789445:web:ab9dde4fd5e795c4d62b2c",
-      measurementId: "G-6W9W2FJW3X"
+      apiKey: "AIzaSyALhu5OCvAbp-U5p_MVdpgxwVrF75loE0Y",
+      authDomain: "ubeyin-llc.firebaseapp.com",
+      databaseURL: "https://ubeyin-llc-default-rtdb.firebaseio.com",
+      projectId: "ubeyin-llc",
+      storageBucket: "ubeyin-llc.appspot.com",
+      messagingSenderId: "15628828648",
+      appId: "1:15628828648:web:e89264a889a403ff52ae5d",
+      measurementId: "G-2HFPKSFM1M"
     };
     firebase.initializeApp(config);
     firebase.analytics();
