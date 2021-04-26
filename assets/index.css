@@ -31,7 +31,7 @@ body {
  border-radius: 0.2rem;
  background: #333;
 }
-#ub-nav-name {
+#ub-nav-name,#form-z-name {
  font-size: 20px;
  font-weight: 800;
  padding: 10px;
@@ -39,7 +39,7 @@ body {
  margin-top: -45px;
  margin-left: 50px;
 }
-#ub-nav-name > span {
+#ub-nav-name > span, #form-z-name > span {
  color: red;
 }
 /** Home Container **/
@@ -221,6 +221,9 @@ body {
   color: #333;
   transition: 1s all ease;
 }
+.form-x-copy > input[type=text]:focus, .form-x-copy > input[type=email]:focus, .form-x-copy > input[type=password]:focus, .form-x-copy > input[type=url]:focus {
+  background: none;
+ }
 .form-x-copy > input:focus {
   box-shadow: 0 0 5px lightgrey;
 }

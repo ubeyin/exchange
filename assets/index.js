@@ -45,6 +45,7 @@ setInterval(function () {
       $ID_NAME("form-x-copy").style.display = "none";
       $ID_NAME("form-z").style.display = "block";
       $USER_DATA(user.uid, user.email);
+      console.log(user);
     } else {
       ubAuth.style.display = "none";
       $ID_NAME("form-x").style.display = "block";
