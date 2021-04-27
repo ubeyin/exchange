@@ -16,21 +16,26 @@ window.onload = function() {
 };
 
 // All functions of HTML Elements
+$("#ub-topic-btn").onclick = function (){
+	$hide("#ub-guest-container");
+	$show("#ub-join-container");
+};
+
 function $TO_SIGNIN() {
-  $("#username").style.display = "none";
-  $("#signIn").style.display = "";
-  $("#toSignIn").style.display = "none";
-  $("#toSignUp").style.display = "";
-  $("#signUp").style.display = "none";
+  $hide("#username");
+  $show("#signIn");
+  $hide("#toSignIn");
+  $show("#toSignUp");
+  $hide("#signUp");
   $("#sign").innerHTML = "Sign In";
 }
 
 function $TO_SIGNUP() {
-  $("#username").style.display = "";
-  $("#signIn").style.display = "none";
-  $("#toSignIn").style.display = "";
-  $("#signUp").style.display = "";
-  $("#toSignUp").style.display = "none";
+  $show("#username");
+  $hide("#signIn");
+  $show("#toSignIn");
+  $show("#signUp");
+  $hide("#toSignUp");
   $("#sign").innerHTML = "Sign Up";
 }
 
@@ -46,5 +51,5 @@ function $hide(x) {
      return document.querySelector(x).style.display = "none";
 }
 function $show(x) {
-     return document.querySelector(x).style.display = "block";
+     return document.querySelector(x).style.display = "";
 }
