@@ -1,0 +1,240 @@
+body {
+	margin: 0;
+}
+
+/* Applied Global Design */
+button,* {
+	font-family: Poppins, sans-serif;
+	font-weight: 200;
+}
+.ub-btn {
+    padding: 15px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background: #FF0078;
+	color: white;
+	font-weight: 550;
+	font-size: 15.5px;
+	border-radius: 0.3rem;
+	user-select: none;
+	border: none;
+    margin-left: calc(40% - 20px);
+    text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+}
+.ub-btn:active {
+  opacity: 0.5;
+}
+.ub-btn-x {
+  width: 100%;
+  height: auto;
+  padding: 14px;
+  border-radius: 0.15rem;
+  background: linear-gradient(-67deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  background-position: 8% 90%;
+  font-size: 18px;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+}
+.ub-btn-x:hover {
+  opacity: 0.8;
+}
+.ub-btn-x:active {
+  transform: scale(0.98);
+}
+.ub-btn-x {
+  padding: 10px;
+  font-size: 16.5px;
+}
+.ub--br-1x {
+  margin-top: 10px;
+}
+.ub--br-2x {
+  margin-top: 20px;
+}
+.ub--br-3x {
+  margin-top: 30px;
+}
+
+/* Animation */
+@keyframes pop-up {
+  from {
+    transform: scale(0.9);
+    opacity: 0.1;
+  }
+  to {
+    transform: scale(1.0);
+    opacity: 1;
+  }
+}
+
+/* All */
+.ub-nav-container {
+	width: 100%;
+	height: auto;
+	background: #fff;
+	box-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+.ub-nav-name {
+	font-size: 21px;
+	font-weight: 700;
+	text-align: center;
+	padding: 5px;
+}
+.ub-nav-name span {
+	color: red;
+	font-size: 25px;
+}
+.ub-guest-banner {
+	width: 100%;
+	height: 500px;
+	background: #1E69CE;
+	/*background-image: url("https://ubeyin.github.io/icon/explore.png");
+    background-repeat: no-repeat;
+    background-size: 78%;
+    background-position: 0% 0%;*/
+    padding-bottom: 10px;
+    color: white;
+}
+.ub-guest-banner > h2,h4 {
+  margin: 0;
+  padding: 35px;
+  padding-bottom: 0px;
+  width: 80%;
+  text-align: center;
+  letter-spacing: 0.8px;
+  font-family: 'Lobster', cursive;
+  animation: 0.21s pop-up linear;
+  text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+}
+.ub-guest-banner > h4 {
+	font-family: Poppins;
+	letter-spacing: 0px;
+}
+.ub-guest-continue {
+	width:45%; 
+    background:#F60057; 
+    color:#fff; 
+    margin-left: calc(32% - 20px);
+}
+.ub-guest-box {
+	width: 76%;
+    height: auto;
+    background: #fff;
+    box-shadow: 0px 0px 6px rgba(0,0,0,0.4);
+    border-radius: 0.35rem;
+    text-align: center;
+    margin: auto;
+    margin-top: -90px;
+    margin-bottom: 20px;
+    padding: 26px;
+    animation: 0.21s linear-up linear;
+}
+.ub-guest-box > div h3 {
+	font-weight: 500;
+}
+.ub-topic > img {
+	width: 80px;
+	height: 80px;
+	background: rgba(0,0,0,0.031);
+	border-radius: 0.5rem;
+	border: none;
+}
+.ub-topic > p {
+	font-size: 16px;
+	padding: 15px;
+}
+.ub-topic-btn {
+	width: 60%;
+	padding: 10px;
+	font-size: 15px;
+	margin-bottom: 25px;
+	margin-top: 2px;
+}
+
+.ub-join-banner {
+  width: 100%;
+  height: 330px;
+  color: #ffffff;
+  background: linear-gradient(-67deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  background-position: 8% 90%;
+  margin-top: 50px;
+}
+.ub-join-banner > h2 {
+  margin: 0;
+  padding: 35px;
+  width: 80%;
+  text-align: center;
+  letter-spacing: 0.8px;
+  font-family: 'Lobster', cursive;
+  animation: 0.21s pop-up linear;
+  text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+}
+@media(min-width:500px) {
+  .ub-join-banner > h2 {
+    font-size: 30px;
+  }
+}
+@keyframes linear-up {
+  from {
+    margin-top: -90px;
+    opacity: 0.1;
+  }
+  to {
+    margin-top: -170px;
+    opacity: 1;
+  }
+}
+@keyframes pop-up {
+  from {
+    transform: scale(0.9);
+    opacity: 0.1;
+  }
+  to {
+    transform: scale(1.0);
+    opacity: 1;
+  }
+}
+.ub-join-form {
+  width: 76%;
+  height: auto;
+  background: #fff;
+  box-shadow: 0px 0px 6px rgba(0,0,0,0.4);
+  border-radius: 0.35rem;
+  text-align: center;
+  margin: auto;
+  margin-top: -170px;
+  margin-bottom: 20px;
+  padding: 30px;
+  animation: 0.21s linear-up linear;
+}
+.ub-join > h1,.ub-join > h2, .ub-join > h3, .ub-join > h4, .ub-join > h5,.ub-join > h6 {
+  font-size: 30px;
+}
+.ub-join > input[type=text], .ub-join > input[type=email], .ub-join > input[type=password], .ub-join > input[type=url] {
+  width: 80%;
+  height: auto;
+  padding: 10px;
+  font-size: 15px;
+  outline: none;
+  border-radius: 0.26rem;
+  border: 2px solid #efefef;
+  color: #333;
+  transition: 1.5s all ease;
+}
+.ub-join > input[type=text]:focus, .ub-join > input[type=email]:focus, .ub-join > input[type=password]:focus, .ub-join > input[type=url]:focus {
+  background: none;
+ }
+.ub-join > input:focus {
+  box-shadow: 0 0 3px lightgrey;
+}
+@media(min-width:500px) {
+  .container4 {
+    width: 50%;
+  }
+}
