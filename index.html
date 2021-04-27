@@ -45,7 +45,7 @@
           	  <img src="https://ubeyin.github.io/icon/explore.png"/>
                 <h3>You can do a lot in it depending on your goal</h3>
                 <p>Access your productions, branches and more with fully halal managed</p>
-                <button class="ub-topic-btn ub-btn-x ub--br-1x" id="ub-topic-btn">View full details</button>
+                <button class="ub-topic-btn ub-btn-x ub--br-1x" id="ub-topic-btn">Lets started</button>
           </div>
      </div>
  </div>
@@ -64,17 +64,21 @@
                       <!-- Password -->
                       <input type="password" class="ub--br-1x" name="password" id="password" placeholder="Password" /><br><br>
                        <!-- Buttons for submission -->
-                       <button class="ub-btn-x ub--br-3x" style="width:86%;margin-bottom:0" id="signUp" onclick="$SIGN_UP()">Sign up now for free</button>
+                       <button class="ub-btn-x ub--br-3x" style="width:92%;margin-bottom:0" id="signUp">Sign up now for free</button>
                    
-                       <button class="ub-btn-x" style="width:86%" id="toSignIn" onclick="$TO_SIGNIN()">Already have an account?</button>
+                       <button class="ub-btn-x" style="width:92%" id="toSignIn">Already have an account?</button>
     
-                      <button class="ub-btn-x ub--br-3x" style="width:86%;display:none;margin-bottom:0" id="signIn" onclick="$SIGN_IN()">Log in and back to home</button>
+                      <button class="ub-btn-x ub--br-3x" style="width:92%;display:none;margin-bottom:0" id="signIn">Log in and back to home</button>
          
-                      <button class="ub-btn-x" style="width:86%;display:none" id="toSignUp" onclick="$TO_SIGNUP()">Havn't any account?</button>
+                      <button class="ub-btn-x" style="width:92%;display:none" id="toSignUp">Havn't any account?</button>
                 </div>
            </div>
-           <div>
-           	
+           <div class="ub-join-alert" id="ub-join-alert" style="display: none">
+           	<h3>WRONG</h3>
+               <p>
+                     Somethings went wrong. Please try again.
+                </p>
+                <button class="ub-btn-x" id="ub-join-alert-btn">Try again</button>
            </div>
      </div>
  </div>
