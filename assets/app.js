@@ -21,7 +21,15 @@ $("#ub-topic-btn").onclick = function (){
 	$show("#ub-join-container");
 };
 
-function $TO_SIGNIN() {
+$("#signUp").onclick = function (){
+	
+};
+
+$("#signIn").onclick = function (){
+	
+};
+
+$("#toSignIn").onclick = function(){
   $hide("#username");
   $show("#signIn");
   $hide("#toSignIn");
@@ -30,7 +38,7 @@ function $TO_SIGNIN() {
   $("#sign").innerHTML = "Sign In";
 }
 
-function $TO_SIGNUP() {
+$("#toSignUp").onclick = function (){
   $show("#username");
   $hide("#signIn");
   $show("#toSignIn");
