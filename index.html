@@ -8,12 +8,12 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
  <meta name="theme-color" content="#ffffff">
  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Lobster" rel="stylesheet">
- <link rel="stylesheet" href="assets/index.css" />
+ <link rel="stylesheet" href="assets/app.css" />
 
  <!-- Meta For SEO -->
  <meta name="description" content="Ubeyin Exchange is a minified website of Ubeyin llc. Join the ubeyin community and discover more.">
  <meta name="robots" content="nofollow">
- <meta name="keywords" content="Ubeyin Exchange, Ubeyin Website, Ubeyin, Ubeyin llc" />
+ <meta name="keywords" content="Ubeyin Exchange, Ubeyin Website, Ubeyin, Ubeyin llc, Community, Halal, Branches" />
  <meta name="google-site-verification" content="-GKmvV536x2ezzXGDQzauzbrq-J-8yk1SEKHA64qGPI">
 
  <!-- Meta For Icon -->
@@ -30,77 +30,63 @@
  <meta property="og:url" content="https://ubeyin.github.com">
 </head>
 <body>
- <div id="ub-nav">
-  <div id="ub-nav-menu">
-   <div></div>
-   <div></div>
-   <div></div>
-  </div>
-  <p id="ub-nav-name">
-   Ubeyin<span>•</span>
-  </p>
+ <div class="ub-nav-container" id="ub-nav-container">
+ 	<div class="ub-nav-name" id="ub-nav-name">
+ 	    Ubeyin<span>•</span>
+     </div>
  </div>
- <div class="container1">
-  <h2 class="header1">
-   Welcome to Ubeyin<br>Join the Ubeyin Exchange Community.
-  </h2>
+ <div class="ub-guest-container" id="ub-guest-container">
+ 	<div class="ub-guest-banner" id="ub-guest-banner">
+ 	    <h2>Worlds One Halal Community,<br> Educative And Informative Website.</h2>
+         <h4>Here all the content and branches are verified by us, so there is no chance of any out of order.</h4>
+         <button class="ub-guest-continue ub-btn-x ub--br-3x" id="ub-guest-continue">Gets Started</button>
+     </div>
+     <div class="ub-guest-box" id="ub-guest-box">
+          <div class="ub-topic" id="ub-topic1">
+          	  <img src="https://ubeyin.github.io/icon/ubeyin.png"/>
+                <h3>You can do a lot in it depending on your goal</h3>
+                <p>Access your productions, branches and more with fully halal managed</p>
+                <button class="ub-topic-btn ub-btn-x ub--br-1x" id="ub-topic1-btn">View full details</button>
+          </div>
+     </div>
  </div>
-
- <div class="ubeyin--form" id="form" title="ubeyin form">
-  <div id="form-s">
-   <div id="form-x" class="form-x" style="display: none">
-    <div id="form-x-copy" class="form-x-copy">
-     <h3 id="signup" style="margin-top:5px">Sign up</h3>
-     <!-- Username -->
-     <input type="text" class="ubeyin--br-1x" name="signup-username" id="username" placeholder="Username" /><br>
-     <!-- Email address -->
-     <input type="email" class="ubeyin--br-1x" name="signup-email" id="email" placeholder="Email address" /><br>
-     <!-- Password -->
-     <input type="password" class="ubeyin--br-1x" name="signup-pass" id="password" placeholder="Password" /><br><br>
-     <!-- Buttons for submission -->
-     <button class="ubeyin--btn-4x ubeyin--br-3x" style="width:86%;margin-bottom:0" id="signup-btnx" onclick="$SIGN_UP()">Sign up now for free</button>
-     <button class="ubeyin--btn-4x" style="width:86%" id="signin-btn" onclick="$GO_SIGNIN()">Already have an account?</button>
-     <button class="ubeyin--btn-4x ubeyin--br-3x" style="width:86%;display:none;margin-bottom:0" id="signin-btnx" onclick="$SIGN_IN()">Log in and back to home</button>
-     <button class="ubeyin--btn-4x" style="width:86%;display:none" id="signup-btn" onclick="$GO_SIGNUP()">Havn't any account?</button>
-    </div>
-   </div>
-   <div id="form-z">
-    <p id="form-z-name" style="margin: 10px">
-         Ubeyin<span>Exchange</span>
-    </p>
-   </div>
-   <div id="form-w" style="display: none">
-    <h3 id="form-w-e1">WRONG</h3>
-    <p id="form-w-e2">
-     Somethings went wrong. Please try again.
-    </p>
-    <button class="ubeyin--btn-4x" id="form-w-btn">Try again</button>
-   </div>
-  </div>
-  <div id="form-end" style="display:none">
-   Thanks for join. Coming soon the update.
-  </div>
+ <div class="ub-join-container" id="ub-join-container" style="display:none">
+ 	<div class="ub-join-banner" id="ub-join-banner">
+         <h2>Worlds One Halal Community, Educative And Informative Website.</h2>
+     </div>
+ 	<div class="ub-join-form" id="ub-join-form">
+           <div class="ub-join-box" id="ub-join-box">
+                <div class="ub-join" id="ub-join">
+                      <h3 id="sign" style="margin-top:5px">Sign up</h3>
+                      <!-- Username -->
+                      <input type="text" class="ub--br-1x" name="username" id="username" placeholder="Username" /><br>
+                       <!-- Email address -->
+                      <input type="email" class="ub--br-1x" name="email" id="email" placeholder="Email address" /><br>
+                      <!-- Password -->
+                      <input type="password" class="ub--br-1x" name="password" id="password" placeholder="Password" /><br><br>
+                       <!-- Buttons for submission -->
+                       <button class="ub-btn-x ub--br-3x" style="width:86%;margin-bottom:0" id="signUp" onclick="$SIGN_UP()">Sign up now for free</button>
+                   
+                       <button class="ub-btn-x" style="width:86%" id="toSignIn" onclick="$TO_SIGNIN()">Already have an account?</button>
+    
+                      <button class="ub-btn-x ub--br-3x" style="width:86%;display:none;margin-bottom:0" id="signIn" onclick="$SIGN_IN()">Log in and back to home</button>
+         
+                      <button class="ub-btn-x" style="width:86%;display:none" id="toSignUp" onclick="$TO_SIGNUP()">Havn't any account?</button>
+                </div>
+           </div>
+           <div>
+           	
+           </div>
+     </div>
  </div>
- <div id="ub-home">
+ <div class="ub-dash-container" id="ub-dash-container" style="display:none">
  	
  </div>
- <div id="ub-auth" style="display: none">
-  <div id="ub-auth-form">
-   <img id="ub-auth-avater" src="https://ubeyin.github.io/icon/ubeyin.png" alt="Error" />
-   <h2 id="ub-auth-title">Choose an account</h2>
-   <h3 id="ub-auth-msg">for Ubeyin Exchange with ubeyin auth</h3>
-   <article id="ub-auth-acc-list" style="display: none">
-    <div>
-     <img src="" alt="" />
-     <p>
-      <strong><!--name--></strong><br><span><!--email--></span>
-     </p>
-    </div>
-   </article>
-   <div id="ub-auth-add-acc" style="display:none">
-       <button class="ubeyin--btn-4x" id="form-w-btn">Continue</button>
-   </div>
-  </div>
+ <div class="ub-anltcs-container" id="ub-anltcs-container" style="display:none">
+ 	
+ </div>
+ <div class="ub-foot-container" id="ub-foot-container" style="display:none">
+ 	
  </div>
  
  <!-- Script Links -->
@@ -109,6 +95,6 @@
  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-database.js"></script>
  <script src="/__/firebasejs/8.3.2/init.js"></script>
- <script type="text/javascript" src="assets/index.js"></script>
+ <script type="text/javascript" src="assets/app.js"></script>
 </body>
 </html>
