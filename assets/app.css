@@ -229,3 +229,25 @@ button,* {
     width: 50%;
   }
 }
+.ub-alert {
+  position: fixed;
+  top: calc(35.10% - 20px);
+  left: 10px;
+  width: 80%;
+  min-height: 150px;
+  background: #fff;
+  box-shadow: 0px 0px 6px rgba(0,0,0,0.4);
+  border-radius: 0.35rem;
+  text-align: center;
+  padding: 30px;
+  animation: 0.21s pop-up linear;
+}
+.ub-alert-x {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.4);
+  width: 100%;
+  height: 100%;
+  filter: blur(3px);
+}

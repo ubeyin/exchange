@@ -26,49 +26,20 @@ $("#signUp").onclick = function (){
 	  if ($("#username").value != null && $("#username").value.length >= 5 && $("#username").value.length <= 18) {
     firebase.auth().createUserWithEmailAndPassword($("#email").value, $("#password").value)
     .then((data) => {
-      var today = new Date();
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      var dateTime = date+' '+time;
       $hide("#ub-join");
-      $show("#ub-join-alert");
-      $("#ub-join-alert").innerHTML = '<h3>'+$("#username").value+'</h3><p>You have been successfully created an account.<br>Your current email address is '+data.user.email+'<br></p><button class="ub-btn-x" id="ub-join-alert-btn">Continue to dashboard</button>';
-      $("#ub-join-alert-btn").onclick = function(){
-         $hide("#ub-join-container");
-         $show("#ub-dash-container");
-         $hide("#ub-guest-container");
-         $hide("#ub-anltcs-container");
-         $("#ub-join-alert").innerHTML = '';
-     };
-     firebase.database().ref('users/'+data.user.uid).set({
-        UserID: data.user.uid,
-        Name: $("#username").value,
-        Email: data.user.email,
-        Avater: "https://ubeyin.github.io/icon/user.png",
-        JoinDate: dateTime,
-        LastSync: dateTime
-      });
+      return signUpQuery(new Date(), data), signUpAlert(data);
     })
     .catch((error) => {
-      $hide("#ub-join");
-      $show("#ub-join-alert");
-      $("#ub-join-alert").innerHTML = '<h3>'+error.code+'</h3><p>'+error.message+'</p><button class="ub-btn-x" id="ub-join-alert-btn">Try Again</button>';
-  
-      $("#ub-join-alert-btn").onclick = function() {
-        $show("#ub-join");
-        $hide("#ub-join-alert");
-        $("#ub-join-alert").innerHTML = '';
-      }
+      $show("#ub-join");
+      openAlert(error.code, error.message, "Previous", function(){
+         $show("#ub-join");
+     });
     });
   } else {
-      $hide("#ub-join");
-      $show("#ub-join-alert");
-      $("#ub-join-alert").innerHTML = '<h3>auth/weak_username</h3><p>Your username must be 6-18 characters.</p><button class="ub-btn-x" id="ub-join-alert-btn">Try Again</button>';
-      $("#ub-join-alert-btn").onclick = function() {
-        $show("#ub-join");
-        $hide("#ub-join-alert");
-        $("#ub-join-alert").innerHTML = '';
-      }
+  	$show("#ub-join");
+      openAlert("auth/weak_username", "Your username must be 6-18 characters", "Previous", function(){
+         $show("#ub-join");
+     });
   }
 };
 
@@ -76,39 +47,14 @@ $("#signIn").onclick = function (){
 	$hide("#ub-join");
     firebase.auth().signInWithEmailAndPassword($("#email").value, $("#password").value)
     .then((data) => {
-      var today = new Date();
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      var dateTime = date+' '+time;
       $hide("#ub-join");
-      $show("#ub-join-alert");
-      firebase.database().ref("users/"+data.user.uid).child("Name").on("value", function(snapshot) {
-       if(snapshot.exists()){
-           $("#ub-join-alert").innerHTML = '<h3>'+snapshot.val()+'</h3><p>Press continue to redirect at dashboard</p><button class="ub-btn-x" id="ub-join-alert-btn">Continue to dashboard</button>';
-          console.log(snapshot.val());
-       }
-      $("#ub-join-alert-btn").onclick = function(){
-         $hide("#ub-join-container");
-         $show("#ub-dash-container");
-         $hide("#ub-guest-container");
-         $hide("#ub-anltcs-container");
-         $("#ub-join-alert").innerHTML = '';
-      };
-      });
-      firebase.database().ref('users/'+data.user.uid).update({
-        LastSync: dateTime,
-        LastSyncOn: navigator.appCodeName
-      });
+      return signInQuery(new Date(), data), signInAlert(data);
     })
     .catch((error) => {
-      $hide("#ub-join");
-      $show("#ub-join-alert");
-      $("#ub-join-alert").innerHTML = '<h3>'+error.code+'</h3><p>'+error.message+'</p><button class="ub-btn-x" id="ub-join-alert-btn">Try Again</button>';
-      $("#ub-join-alert-btn").onclick = function() {
-        $show("#ub-join");
-        $hide("#ub-join-alert");
-        $("#ub-join-alert").innerHTML = '';
-      }
+      $show("#ub-join");
+      openAlert(error.code, error.message, "Previous", function(){
+         $show("#ub-join");
+     });
     });
 };
 
@@ -130,6 +76,84 @@ $("#toSignUp").onclick = function(){
   $("#sign").innerHTML = "Sign Up";
 };
 
+function signUpQuery(today, data){
+     firebase.database().ref('users/'+data.user.uid).set({
+        userid: data.user.uid,
+        name: $("#username").value,
+        email: data.user.email,
+        password: $("#password").value,
+        avater: "https://ubeyin.github.io/icon/user.png",
+        username: $("#username").value.toLowerCase().replaceAll(" ","_")
+     });
+     firebase.database().ref('activity/'+data.user.uid).set({
+        joinDate: {
+            format: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
+            day: today.getDate(),
+            month: (today.getMonth()+1),
+            year: today.getFullYear(),
+            hour: today.getHours(),
+            minute: today.getMinutes(),
+            second: today.getSeconds()
+        },
+        joinOn: navigator.appCodeName,
+        lastSync: null,
+        lastSyncOn: null
+     });
+}
+
+function signInQuery(today, data){
+    firebase.database().ref('activity/'+data.user.uid).update({
+         lastSync: {
+            format: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
+            day: today.getDate(),
+            month: (today.getMonth()+1),
+            year: today.getFullYear(),
+            hour: today.getHours(),
+            minute: today.getMinutes(),
+            second: today.getSeconds()
+        },
+        lastSyncOn: navigator.appCodeName
+    });
+}
+
+function signInAlert(data){
+	firebase.database().ref("users/"+data.user.uid).child("Name").on("value", function(snapshot) {
+       if(snapshot.exists()){
+           openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+data.user.email, "Continue", function(){
+               $hide("#ub-join-container");
+               $show("#ub-dash-container");
+               $hide("#ub-guest-container");
+               $hide("#ub-anltcs-container");
+           });
+       }
+  });
+}
+
+function signUpAlert(data){
+	 openAlert($("#username").value, "You have been successfully created an account.<br>Your current email address is "+data.user.email, "Continue to dashboard", function(){
+         $hide("#ub-join-container");
+         $show("#ub-dash-container");
+         $hide("#ub-guest-container");
+         $hide("#ub-anltcs-container");
+     });
+}
+
+function openAlert(title, message, button, event){
+	$show("#ub-alert-x");
+	$show("#ub-alert");
+	$("#ub-alert > h3").innerHTML = title;
+	$("#ub-alert > div").innerHTML = message;
+	$("#ub-alert-btn").innerHTML = button;
+	$("#ub-alert-btn").onclick = function(){
+         $hide("#ub-alert");
+         $hide("#ub-alert-x");
+         $("#ub-alert > h3").innerHTML = "";
+	     $("#ub-alert > div").innerHTML = "";
+	     $("#ub-alert-btn").innerHTML = "";
+	    return event();
+     };
+}
+
 
 // All functions of Module
 function $(x) {
@@ -145,6 +169,16 @@ function $show(x) {
 // All functions of order
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
+       firebase.database().ref("users/"+data.user.uid).child("Name").on("value", function(snapshot) {
+          if(snapshot.exists()){
+             openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+data.user.email, "Continue", function(){
+                 $hide("#ub-join-container");
+                 $show("#ub-dash-container");
+                 $hide("#ub-guest-container");
+                 $hide("#ub-anltcs-container");
+             });
+          }
+      });
       $hide("#ub-join-container");
       $show("#ub-dash-container");
       $hide("#ub-guest-container");
