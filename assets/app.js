@@ -15,15 +15,6 @@ window.onload = function() {
   }, 100);
 };
 
-setInterval(function () {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      $hide("#ub-join-container");
-      $show("#ub-dash-container");
-    }
-  });
-}, 100);
-
 // All functions of HTML Elements
 $("#ub-topic-btn").onclick = function (){
 	$hide("#ub-guest-container");
@@ -41,8 +32,15 @@ $("#signUp").onclick = function (){
       var dateTime = date+' '+time;
       $hide("#ub-join");
       $show("#ub-join-alert");
-      $("#ub-join-alert").innerHTML = '<h3>Welcome</h3><p>Dear User, You have been successfully created an account.<br>Your current email address is '+data.user.email+'<br></p><button class="ub-btn-x" id="ub-join-alert-btn">Continue to dashboard</button>';
-      firebase.database().ref('users/' + data.user.uid).set({
+      $("#ub-join-alert").innerHTML = '<h3>'+$("#username").value+'</h3><p>You have been successfully created an account.<br>Your current email address is '+data.user.email+'<br></p><button class="ub-btn-x" id="ub-join-alert-btn">Continue to dashboard</button>';
+      $("#ub-join-alert-btn").onclick = function(){
+         $hide("#ub-join-container");
+         $show("#ub-dash-container");
+         $hide("#ub-guest-container");
+         $hide("#ub-anltcs-container");
+         $("#ub-join-alert").innerHTML = '';
+     };
+     firebase.database().ref('users/'+data.user.uid).set({
         UserID: data.user.uid,
         Name: $("#username").value,
         Email: data.user.email,
@@ -54,21 +52,22 @@ $("#signUp").onclick = function (){
     .catch((error) => {
       $hide("#ub-join");
       $show("#ub-join-alert");
-      $("#ub-join-alert h3").innerHTML = error.code;
-      $("#ub-join-alert p").innerHTML = error.message;
+      $("#ub-join-alert").innerHTML = '<h3>'+error.code+'</h3><p>'+error.message+'</p><button class="ub-btn-x" id="ub-join-alert-btn">Try Again</button>';
+  
       $("#ub-join-alert-btn").onclick = function() {
         $show("#ub-join");
         $hide("#ub-join-alert");
+        $("#ub-join-alert").innerHTML = '';
       }
     });
   } else {
       $hide("#ub-join");
       $show("#ub-join-alert");
-      $("#ub-join-alert h3").innerHTML = "auth/weak_username";
-      $("#ub-join-alert p").innerHTML = "Your username must be 6-18 characters.";
+      $("#ub-join-alert").innerHTML = '<h3>auth/weak_username</h3><p>Your username must be 6-18 characters.</p><button class="ub-btn-x" id="ub-join-alert-btn">Try Again</button>';
       $("#ub-join-alert-btn").onclick = function() {
         $show("#ub-join");
         $hide("#ub-join-alert");
+        $("#ub-join-alert").innerHTML = '';
       }
   }
 };
@@ -81,22 +80,34 @@ $("#signIn").onclick = function (){
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
-      firebase.database().ref('users/' + data.user.uid).set({
-        LastSync: dateTime,
-        LastSyncOn: navigator.appName
-      });
       $hide("#ub-join");
       $show("#ub-join-alert");
-      $("#ub-join-alert").innerHTML = '<h3>Welcome back</h3><p>Dear User, You have been successfully backed to your account.<br>Your current email address is '+data.user.email+'<br></p><button class="ub-btn-x" id="ub-join-alert-btn">Continue to dashboard</button>';
+      firebase.database().ref("users/"+data.user.uid).child("Name").on("value", function(snapshot) {
+       if(snapshot.exists()){
+           $("#ub-join-alert").innerHTML = '<h3>'+snapshot.val()+'</h3><p>Press continue to redirect at dashboard</p><button class="ub-btn-x" id="ub-join-alert-btn">Continue to dashboard</button>';
+          console.log(snapshot.val());
+       }
+      $("#ub-join-alert-btn").onclick = function(){
+         $hide("#ub-join-container");
+         $show("#ub-dash-container");
+         $hide("#ub-guest-container");
+         $hide("#ub-anltcs-container");
+         $("#ub-join-alert").innerHTML = '';
+      };
+      });
+      firebase.database().ref('users/'+data.user.uid).update({
+        LastSync: dateTime,
+        LastSyncOn: navigator.appCodeName
+      });
     })
     .catch((error) => {
       $hide("#ub-join");
       $show("#ub-join-alert");
-      $("#ub-join-alert h3").innerHTML = error.code;
-      $("#ub-join-alert p").innerHTML = error.message;
+      $("#ub-join-alert").innerHTML = '<h3>'+error.code+'</h3><p>'+error.message+'</p><button class="ub-btn-x" id="ub-join-alert-btn">Try Again</button>';
       $("#ub-join-alert-btn").onclick = function() {
         $show("#ub-join");
         $hide("#ub-join-alert");
+        $("#ub-join-alert").innerHTML = '';
       }
     });
 };
@@ -119,6 +130,7 @@ $("#toSignUp").onclick = function(){
   $("#sign").innerHTML = "Sign Up";
 };
 
+
 // All functions of Module
 function $(x) {
      return document.querySelector(x);
@@ -129,3 +141,19 @@ function $hide(x) {
 function $show(x) {
      return document.querySelector(x).style.display = "";
 }
+
+// All functions of order
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      $hide("#ub-join-container");
+      $show("#ub-dash-container");
+      $hide("#ub-guest-container");
+      $hide("#ub-anltcs-container");
+    } else {
+      $show("#ub-guest-container");
+      $hide("#ub-dash-container");
+      $hide("#ub-guest-container");
+      $hide("#ub-join-container");
+      $hide("#ub-anltcs-container");
+    }
+});
