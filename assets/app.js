@@ -93,62 +93,57 @@ function $show(x) {
   return document.querySelector(x).style.display = "";
 }
 
-// All functions of order
+// All functions of Database
 function signUpQuery(today, data) {
   firebase.database().ref('users/'+data.user.uid).set({
-    userid: data.user.uid,
+    id: data.user.uid,
+    avater: "https://ubeyin.github.io/icon/user.png",
     name: $("#username").value,
     email: data.user.email,
     password: window.btoa($("#password").value),
-    avater: "https://ubeyin.github.io/icon/user.png"
   });
   firebase.database().ref('activity/'+data.user.uid).set({
-    joinDate: {
+    joined: {
       format: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
-      day: today.getDate(),
-      month: (today.getMonth()+1),
-      year: today.getFullYear(),
-      hour: today.getHours(),
-      minute: today.getMinutes(),
-      second: today.getSeconds()
-    },
-    joinOn: getUA(),
-    lastSync: {
-      format: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
-      day: today.getDate(),
-      month: (today.getMonth()+1),
-      year: today.getFullYear(),
-      hour: today.getHours(),
-      minute: today.getMinutes(),
-      second: today.getSeconds()
-    },
-    lastSyncOn: getUA(),
-    lastSyncDeviceCharge: navigator.getBattery().then(function(ev) {
-      return ev.label*100+"%";
-    })
+      parts: {
+        day: today.getDate(),
+        month: (today.getMonth()+1),
+        year: today.getFullYear(),
+        hour: today.getHours(),
+        minute: today.getMinutes(),
+        second: today.getSeconds()
+      },
+      device: {
+        name: getUA(),
+        agent: navigator.userAgent
+      }
+    }
   });
 }
 
 function signInQuery(today, data) {
   firebase.database().ref('activity/'+data.user.uid).update({
-    lastSync: {
+    logged: {
       format: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
-      day: today.getDate(),
-      month: (today.getMonth()+1),
-      year: today.getFullYear(),
-      hour: today.getHours(),
-      minute: today.getMinutes(),
-      second: today.getSeconds()
-    },
-    lastSyncOn: getUA(),
-    lastSyncDeviceCharge: navigator.getBattery().then(function(ev) {
-      return ev.label*100+"%";
-    })
+      parts: {
+        day: today.getDate(),
+        month: (today.getMonth()+1),
+        year: today.getFullYear(),
+        hour: today.getHours(),
+        minute: today.getMinutes(),
+        second: today.getSeconds()
+      },
+      device: {
+        name: getUA(),
+        agent: navigator.userAgent
+      }
+    }
   });
 }
 
+// All functions of order
 function signInAlert(data) {
-  firebase.database().ref("users/"+data.user.uid).child("Name").on("value", function(snapshot) {
+  firebase.database().ref("users/"+data.user.uid).child("name").on("value", function(snapshot) {
     if (snapshot.exists()) {
       openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+data.user.email, "Continue", function() {
         $hide("#ub-join-container");
