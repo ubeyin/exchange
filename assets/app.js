@@ -276,7 +276,7 @@ const getUA = () => {
 setTimeout(function() {
   var user = firebase.auth().currentUser;
   if (user) {
-    firebase.database().ref("users/"+user.uid).child("Name").on("value", function(snapshot) {
+    firebase.database().ref("users/"+user.uid).child("name").on("value", function(snapshot) {
       if (snapshot.exists()) {
         openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+user.email, "Continue", function() {
           $hide("#ub-join-container");
