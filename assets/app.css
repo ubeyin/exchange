@@ -1,10 +1,16 @@
+/*
+      Source: https://ubeyin.github.io/assets/app.css
+      Licensed under Creative Commons, MIT And Apache 2.0.
+      Copyright 2021 by Ubeyin LLC.
+*/
+
 body {
-	margin: 0;
+  margin: 0;
 }
 
 /* Applied Global Design */
 button,* {
-	font-family: Poppins, sans-serif;
+  font-family: Poppins,sans-serif;
 }
 .ub-btn {
   width: 100%;
@@ -20,7 +26,7 @@ button,* {
   outline: 0;
   margin-top: 10px;
   margin-bottom: 10px;
-  text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+  text-shadow: 0px 0px 6px rgba(0,0,0,0.4);
 }
 .ub-btn:active {
   opacity: 0.5;
@@ -37,7 +43,7 @@ button,* {
   outline: 0;
   margin-top: 10px;
   margin-bottom: 10px;
-  text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+  text-shadow: 0px 0px 6px rgba(0,0,0,0.4);
 }
 .ub-btn-x:hover {
   opacity: 0.8;
@@ -93,28 +99,28 @@ button,* {
 
 /* All */
 .ub-nav-container {
-	width: 100%;
-	height: auto;
-	background: #fff;
-	box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  width: 100%;
+  height: auto;
+  background: #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.4);
 }
 .ub-nav-name {
-	font-size: 21px;
-	font-weight: 700;
-	text-align: left;
-	margin-left: 10px;
-	padding: 5px;
+  font-size: 21px;
+  font-weight: 700;
+  text-align: left;
+  margin-left: 10px;
+  padding: 5px;
 }
 .ub-nav-name span {
-	color: red;
-	font-size: 25px;
+  color: red;
+  font-size: 25px;
 }
 .ub-guest-banner {
-	width: 100%;
-	height: 400px;
-	background: #1E69CE;
-    padding-bottom: 10px;
-    color: white;
+  width: 100%;
+  height: 400px;
+  background: #1E69CE;
+  padding-bottom: 10px;
+  color: white;
 }
 .ub-guest-banner > h2,h4 {
   margin: 0;
@@ -124,48 +130,48 @@ button,* {
   letter-spacing: 0.8px;
   font-family: 'Lobster', cursive;
   animation: 0.21s pop-up linear;
-  text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+  text-shadow: 0px 0px 6px rgba(0,0,0,0.4);
   font-weight: 200;
 }
 .ub-guest-banner > h4 {
-	font-family: Poppins;
-	letter-spacing: -0.1px;
+  font-family: Poppins;
+  letter-spacing: -0.1px;
 }
 .ub-guest-box {
-	width: 76%;
-    height: auto;
-    background: #fff;
-    box-shadow: 0px 0px 6px rgba(0,0,0,0.4);
-    border-radius: 0.35rem;
-    text-align: center;
-    margin: auto;
-    margin-top: -90px;
-    margin-bottom: 20px;
-    padding: 26px;
-    animation: 0.21s linear-up linear;
+  width: 76%;
+  height: auto;
+  background: #fff;
+  box-shadow: 0px 0px 6px rgba(0,0,0,0.4);
+  border-radius: 0.35rem;
+  text-align: center;
+  margin: auto;
+  margin-top: -90px;
+  margin-bottom: 20px;
+  padding: 26px;
+  animation: 0.21s linear-up linear;
 }
 .ub-guest-box > div h3 {
-	font-weight: 500;
+  font-weight: 500;
 }
 .ub-topic > img {
-	width: 80px;
-	height: 80px;
-	background: #1E69CE;
-	border-radius: 100rem;
-	border: none;
+  width: 80px;
+  height: 80px;
+  background: #1E69CE;
+  border-radius: 100rem;
+  border: none;
 }
 .ub-topic > p {
-	font-size: 16px;
-	padding: 15px;
+  font-size: 16px;
+  padding: 15px;
 }
 .ub-topic-btn {
-	width: 60%;
-	padding: 10px;
-	font-size: 15px;
-	margin-bottom: 25px;
-	margin-top: 2px;
-	background: #1E69CE;
-	/*background:#F60057;*/
+  width: 60%;
+  padding: 10px;
+  font-size: 15px;
+  margin-bottom: 25px;
+  margin-top: 2px;
+  background: #1E69CE;
+  /*background:#F60057;*/
 }
 
 .ub-join-banner {
@@ -181,7 +187,7 @@ button,* {
   letter-spacing: 0.8px;
   font-family: 'Lobster', cursive;
   animation: 0.21s pop-up linear;
-  text-shadow:   0px 0px 6px rgba(0,0,0,0.4);
+  text-shadow: 0px 0px 6px rgba(0,0,0,0.4);
 }
 @media(min-width:500px) {
   .ub-join-banner > h2 {
@@ -217,12 +223,10 @@ button,* {
 }
 .ub-join > input[type=text]:focus, .ub-join > input[type=email]:focus, .ub-join > input[type=password]:focus, .ub-join > input[type=url]:focus {
   background: none;
- }
-.ub-join > input:focus {
-  box-shadow: 0 0 3px lightgrey;
 }
+.ub-join > input:focus {}
 .ub-join > button {
-	background: #1E69CE;
+  background: #1E69CE;
 }
 @media(min-width:500px) {
   .container4 {
@@ -242,7 +246,7 @@ button,* {
   padding: 30px;
   animation: 0.21s pop-up linear;
 }
-.ub-alert-x {
+.ub-alert-x , .ub-join-layer {
   position: fixed;
   top: 0;
   left: 0;
@@ -250,4 +254,23 @@ button,* {
   width: 100%;
   height: 100%;
   filter: blur(3px);
+}
+.ub-join-layer {
+  filter: none;
+  background: rgba(0,0,0,0.5);
+}
+.ub-join-layer > div {
+  position: fixed;
+  bottom: calc(5% - 20px);
+  left: calc(43% - 20px);
+  font-size: 70px;
+  animation: pop-up2s infinite linear;
+  color: white;
+}
+.ub-join-layer > div button {
+  background: #333;
+  font-size: 14px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  opacity: 0.6;
 }
