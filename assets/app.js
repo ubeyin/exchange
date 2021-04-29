@@ -38,12 +38,14 @@ $("#signUp").onclick = function () {
       dashQuery(data.user);
     })
     .catch((error) => {
+      alert.log(error.message);
       openAlert(error.code, error.message, "Previous", function() {
         $show("#ub-join");
       });
       $hide("#ub-join-layer");
     });
   } else {
+    alert.log("Your username must be 6-18 characters");
     openAlert("auth/weak_username", "Your username must be 6-18 characters", "Previous", function() {
       $show("#ub-join");
     });
@@ -60,6 +62,7 @@ $("#signIn").onclick = function () {
     dashQuery(data.user);
   })
   .catch((error) => {
+    alert.log(error.message);
     openAlert(error.code, error.message, "Previous", function() {
       $show("#ub-join");
     });
@@ -88,7 +91,7 @@ $("#toSignUp").onclick = function() {
 $("#dash-uid").onclick = function() {
   let copyText = $("#dash-uid").innerHTML;
   copyToClipboard(copyText);
-  console.log(copyText+" copied to clipboard");
+  alert.log("Copied to clipboard");
 }
 
 // All functions of Module
@@ -117,7 +120,7 @@ function copyToClipboard(text) {
             return document.execCommand("copy");  // Security exception may be thrown by some browsers.
         }
         catch (ex) {
-            console.warn("Copy to clipboard failed.", ex);
+            alert.error("Copy to clipboard failed");
             return false;
         }
         finally {
@@ -134,9 +137,10 @@ function signUpQuery(today, data) {
     name: $("#username").value,
     email: data.user.email,
     password: window.btoa($("#password").value),
-    verification: false
+    isVerified: false
   });
   firebase.database().ref('branch/'+data.user.uid).set({
+    isVerified: false,
     active: false
   });
   firebase.database().ref('activity/'+data.user.uid).set({
@@ -185,6 +189,11 @@ function dashQuery(data) {
           $("#ub-dash-branch p").innerHTML = snapshot.val().name;
       } else {
       	$("#ub-dash-branch p").innerHTML = "You have no branch";
+      }
+      if(snapshot.val().isVerified && snapshot.val().isVerified == true){
+      	
+      } else {
+      	alert.log("You are not a verified user, wait for verification");
       }
     } else {
       $("#ub-dash-branch p").innerHTML = "You have no branch";
@@ -287,3 +296,51 @@ setTimeout(function() {
     $hide("#ub-anltcs-container");
   }
 }, 100);
+
+/* Alerts */
+let alert_main = document.getElementById('alert-main');
+let alert_msg = document.getElementById('alert-msg');
+let alert_btn = document.getElementById('alert-btn');
+
+alert_btn.onclick = function() {
+  alert_main.style.height = '0px';
+}
+
+alert_main.ontouchmove = function() {
+  alert_main.style.height = '0px';
+}
+
+alert["error"] = function(msg) {
+  document.getElementById('alert-icon').className = 'fa fa-warning';
+  if (msg != "" && msg != null) {
+    alert_msg.innerHTML = msg;
+  } else if (msg == null) {
+    alert_msg.innerHTML = "[Null]";
+  } else if (msg == "") {
+    alert_msg.innerHTML = "[Empty]";
+  } else {
+    alert_msg.innerHTML = "[Undefined]";
+  }
+  setTimeout(()=>{
+      alert_main.style.height = '0px';
+  }, 2500);
+  alert_main.style.height = '50px';
+  alert_main.style.background = '#ff3535';
+}
+alert["log"] = function(msg) {
+  document.getElementById('alert-icon').className = 'fa fa-bell';
+  if (msg != "" && msg != null) {
+    alert_msg.innerHTML = msg;
+  } else if (msg == null) {
+    alert_msg.innerHTML = "[Null]";
+  } else if (msg == "") {
+    alert_msg.innerHTML = "[Empty]";
+  } else {
+    alert_msg.innerHTML = "[Undefined]";
+  }
+  setTimeout(()=>{
+      alert_main.style.height = '0px';
+  }, 2500);
+  alert_main.style.height = '50px';
+  alert_main.style.background = '#222';
+}
