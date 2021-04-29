@@ -32,20 +32,22 @@ $("#signUp").onclick = function () {
   if ($("#username").value != null && $("#username").value.length >= 5 && $("#username").value.length <= 18) {
     firebase.auth().createUserWithEmailAndPassword($("#email").value, $("#password").value)
     .then((data) => {
+      signUpQuery(new Date(), data);
+      signUpAlert(data);
       $hide("#ub-join-layer");
-      return signUpQuery(new Date(), data), signUpAlert(data);
+      dashQuery(data.user);
     })
     .catch((error) => {
-      $hide("#ub-join-layer");
       openAlert(error.code, error.message, "Previous", function() {
         $show("#ub-join");
       });
+      $hide("#ub-join-layer");
     });
   } else {
-    $hide("#ub-join-layer");
     openAlert("auth/weak_username", "Your username must be 6-18 characters", "Previous", function() {
       $show("#ub-join");
     });
+    $hide("#ub-join-layer");
   }
 };
 
@@ -53,14 +55,15 @@ $("#signIn").onclick = function () {
   $show("#ub-join-layer");
   firebase.auth().signInWithEmailAndPassword($("#email").value, $("#password").value)
   .then((data) => {
-    $hide("#ub-join-layer");
-    return signInQuery(new Date(), data), signInAlert(data);
+    signInQuery(new Date(), data);
+    signInAlert(data);
+    dashQuery(data.user);
   })
   .catch((error) => {
-    $hide("#ub-join-layer");
     openAlert(error.code, error.message, "Previous", function() {
       $show("#ub-join");
     });
+    $hide("#ub-join-layer");
   });
 };
 
@@ -82,6 +85,12 @@ $("#toSignUp").onclick = function() {
   $("#sign").innerHTML = "Sign Up";
 };
 
+$("#dash-uid").onclick = function() {
+  let copyText = $("#dash-uid").innerHTML;
+  copyToClipboard(copyText);
+  console.log(copyText+" copied to clipboard");
+}
+
 // All functions of Module
 function $(x) {
   return document.querySelector(x);
@@ -93,6 +102,30 @@ function $show(x) {
   return document.querySelector(x).style.display = "";
 }
 
+function copyToClipboard(text) {
+    if (window.clipboardData && window.clipboardData.setData) {
+        return window.clipboardData.setData("Text", text);
+    }
+    else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+        var textarea = document.createElement("textarea");
+        textarea.textContent = text;
+        textarea.style.opacity = 0;
+        textarea.style.position = "fixed";
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+        }
+        catch (ex) {
+            console.warn("Copy to clipboard failed.", ex);
+            return false;
+        }
+        finally {
+            document.body.removeChild(textarea);
+        }
+    }
+}
+
 // All functions of Database
 function signUpQuery(today, data) {
   firebase.database().ref('users/'+data.user.uid).set({
@@ -101,6 +134,10 @@ function signUpQuery(today, data) {
     name: $("#username").value,
     email: data.user.email,
     password: window.btoa($("#password").value),
+    verification: false
+  });
+  firebase.database().ref('branch/'+data.user.uid).set({
+    active: false
   });
   firebase.database().ref('activity/'+data.user.uid).set({
     joined: {
@@ -141,18 +178,37 @@ function signInQuery(today, data) {
   });
 }
 
-// All functions of order
-function signInAlert(data) {
-  firebase.database().ref("users/"+data.user.uid).child("name").on("value", function(snapshot) {
+function dashQuery(data) {
+  firebase.database().ref("users").child(data.uid).on("value", function(snapshot) {
     if (snapshot.exists()) {
-      openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+data.user.email, "Continue", function() {
-        $hide("#ub-join-container");
-        $show("#ub-dash-container");
-        $hide("#ub-guest-container");
-        $hide("#ub-anltcs-container");
-      });
+      if(snapshot.val().active && snapshot.val().active == true){
+          $("#ub-dash-branch p").innerHTML = snapshot.val().name;
+      } else {
+      	$("#ub-dash-branch p").innerHTML = "You have no branch";
+      }
+    } else {
+      $("#ub-dash-branch p").innerHTML = "You have no branch";
     }
   });
+  $("#dash-uid").innerHTML = "<i class='fa fa-fingerprint'></i>"+data.uid;
+  firebase.database().ref("branch").child(data.uid).on("value", function(snapshot) {
+    if (snapshot.exists()) {
+      $("#dash-uname").innerHTML = snapshot.val().name;
+    } else {
+      $("#dash-uname").innerHTML = "Welcome";
+    }
+  });
+}
+
+// All functions of order
+function signInAlert(data) {
+        openAlert("Welcome back", "You have been successfully redirected to your account.<br>Your current email address is "+data.user.email, "Continue", function() {
+          $hide("#ub-join-container");
+          $show("#ub-dash-container");
+          $hide("#ub-guest-container");
+          $hide("#ub-anltcs-container");
+        });
+        $hide("#ub-join-layer");
 }
 
 function signUpAlert(data) {
@@ -206,28 +262,28 @@ const getUA = () => {
 }
 
 setTimeout(function() {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      firebase.database().ref("users/"+user.uid).child("Name").on("value", function(snapshot) {
-        if (snapshot.exists()) {
-          openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+user.email, "Continue", function() {
-            $hide("#ub-join-container");
-            $show("#ub-dash-container");
-            $hide("#ub-guest-container");
-            $hide("#ub-anltcs-container");
-          });
-        }
-      });
-      $hide("#ub-join-container");
-      $show("#ub-dash-container");
-      $hide("#ub-guest-container");
-      $hide("#ub-anltcs-container");
-    } else {
-      $show("#ub-guest-container");
-      $hide("#ub-dash-container");
-      $hide("#ub-guest-container");
-      $hide("#ub-join-container");
-      $hide("#ub-anltcs-container");
-    }
-  });
+  var user = firebase.auth().currentUser;
+  if (user) {
+    firebase.database().ref("users/"+user.uid).child("Name").on("value", function(snapshot) {
+      if (snapshot.exists()) {
+        openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+user.email, "Continue", function() {
+          $hide("#ub-join-container");
+          $show("#ub-dash-container");
+          $hide("#ub-guest-container");
+          $hide("#ub-anltcs-container");
+        });
+      }
+    });
+    $hide("#ub-join-container");
+    $show("#ub-dash-container");
+    $hide("#ub-guest-container");
+    $hide("#ub-anltcs-container");
+    dashQuery(user);
+  } else {
+    $show("#ub-guest-container");
+    $hide("#ub-dash-container");
+    $hide("#ub-guest-container");
+    $hide("#ub-join-container");
+    $hide("#ub-anltcs-container");
+  }
 }, 100);
