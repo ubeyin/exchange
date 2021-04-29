@@ -108,7 +108,7 @@ i {
   box-shadow: 0 0 4px rgba(0,0,0,0.4);
 }
 .ub-nav-name {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   text-align: left;
   margin-left: 10px;
@@ -286,25 +286,6 @@ i {
   text-align: right;
   float: right;
 }
-.ub-join-layer {
-  filter: none;
-  background: rgba(0,0,0,0.5);
-}
-.ub-join-layer > div {
-  position: fixed;
-  bottom: calc(5% - 20px);
-  left: calc(43% - 20px);
-  font-size: 70px;
-  animation: 2s pop-up infinite linear;
-  color: white;
-}
-.ub-join-layer > div button {
-  background: #333;
-  font-size: 14px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  opacity: 0.6;
-}
 
 /* Alerts */
 .ub-alert {
@@ -329,7 +310,26 @@ i {
   height: 100%;
   filter: blur(3px);
 }
-.alert-main {
+.ub-join-layer {
+  filter: none;
+  background: rgba(0,0,0,0.5);
+}
+.ub-join-layer > div {
+  position: fixed;
+  bottom: calc(5% - 20px);
+  left: calc(43% - 20px);
+  font-size: 70px;
+  animation: 2s pop-up infinite linear;
+  color: white;
+}
+.ub-join-layer > div button {
+  background: #333;
+  font-size: 14px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  opacity: 0.6;
+}
+.alert-main  {
   width: 100%;
   height: 0px;
   background: #222;
@@ -344,7 +344,7 @@ i {
   opacity: 0.7;
   transition: all 0.4s ease-in;
 }
-.alert-main>.alert-msg {
+.alert-msg {
   font-weight: 100;
   margin: 4px;
   position: absolute;
@@ -354,7 +354,7 @@ i {
   line-height: 2.56em;
   font-family: "Raleway",Sans-Serif;
 }
-.alert-main>.alert-btn {
+.alert-btn {
   font-family: "Raleway",Sans-Serif;
   margin: 4px;
   position: absolute;
@@ -368,7 +368,7 @@ i {
   color: #eee;
   letter-spacing: -0.5px;
 }
-.alert-main>.alert-btn:active {
+.alert-btn:active, .alert-btn:active {
   opacity: 0.7;
 }
 #alert-icon {
@@ -378,4 +378,35 @@ i {
   left: 8px;
   max-width: 80px;
   font-size: 15px;
+}
+.dash-alert-main {
+  height: auto;
+  position: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  margin-top: 10px;
+  background: #222;
+  color: #fff;
+  font-weight: 100;
+  font-size: 13px;
+  font-family: "Raleway",Sans-Serif;
+  opacity: 0.7;
+  transition: all 0.4s ease-in;
+}
+.dash-alert-msg {
+  font-weight: 100;
+  margin: 4px;
+  margin-left: 35px;
+  max-width: 260px;
+  font-family: "Raleway",Sans-Serif;
+}
+#dash-alert-icon {
+  margin: 4px;
+  margin-top: 13px;
+  margin-left: 8px;
+  margin-right: 10px;
+  max-width: 80px;
+  font-size: 15px;
+  float: left;
 }
