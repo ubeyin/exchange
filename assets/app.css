@@ -162,7 +162,7 @@ i {
 .ub-topic > img {
   width: 80px;
   height: 80px;
-  background: #1E69CE;
+  background: #fff;
   border-radius: 100rem;
   border: none;
 }
@@ -285,6 +285,7 @@ i {
 .ub-dash-branch > h3 div {
   text-align: right;
   float: right;
+  color: #333;
 }
 
 /* Alerts */
@@ -319,7 +320,6 @@ i {
   bottom: calc(5% - 20px);
   left: calc(43% - 20px);
   font-size: 70px;
-  animation: 2s pop-up infinite linear;
   color: white;
 }
 .ub-join-layer > div button {

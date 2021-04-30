@@ -23,8 +23,26 @@ window.onload = function() {
 
 // All functions of HTML Elements
 $("#ub-topic-btn").onclick = function () {
-  $hide("#ub-guest-container");
-  $show("#ub-join-container");
+  var user = firebase.auth().currentUser;
+  if (user) {
+    firebase.database().ref("users/"+user.uid).child("name").on("value", function(snapshot) {
+      if (snapshot.exists()) {
+        openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+user.email, "Continue", function() {
+          $show("#ub-join-layer");
+        });
+      }
+    });
+    $hide("#ub-join-container");
+    $show("#ub-dash-container");
+    $hide("#ub-guest-container");
+    $hide("#ub-anltcs-container");
+    dashQuery(user);
+  } else {
+    $hide("#ub-guest-container");
+    $show("#ub-join-container");
+    $hide("#ub-dash-container");
+    $hide("#ub-anltcs-container");
+  }
 };
 
 $("#signUp").onclick = function () {
@@ -190,11 +208,13 @@ function dashQuery(data) {
     if(snapshot.val().isVerified && snapshot.val().isVerified == true){
       	$hide("#dash-alert-main");
       	$("#dash-alert-msg").innerHTML = "";
+          /**/ $hide("#ub-join-layer");
       } else if(snapshot.val().isVerified && snapshot.val().isVerified == false) {
       	$show("#dash-alert-main");
       	$("#dash-alert-msg").innerHTML = "You are not a verified user, wait for verification";
+          /**/ $hide("#ub-join-layer");
       }
-      $hide("#ub-join-layer");
+     /**/ $hide("#ub-join-layer");
   });
   firebase.database().ref("branch").child(data.uid).on("value", function(snapshot) {
     if (snapshot.exists()) {
@@ -203,16 +223,17 @@ function dashQuery(data) {
       } else if(snapshot.val().active && snapshot.val().active == false) {
       	$("#ub-dash-branch-p").innerHTML = "You have no branch";
       }
+      /**/ $hide("#ub-join-layer");
     } else {
-      //
+      /**/ $hide("#ub-join-layer");
     }
-    $hide("#ub-join-layer");
+    /**/ $hide("#ub-join-layer");
   });
 }
 
 // All functions of order
 function signInAlert(data) {
-        openAlert("Welcome back", "You have been successfully redirected to your account.<br>Your current email address is "+data.user.email, "Continue", function() {
+        openAlert("Welcome back", "You have been successfully redirected to your account.<br>Your current email address is "+data.user.email, "Continue to dashboard", function() {
           $hide("#ub-join-container");
           $show("#ub-dash-container");
           $hide("#ub-guest-container");
@@ -273,33 +294,6 @@ const getUA = () => {
   return device;
 }
 
-setTimeout(function() {
-  var user = firebase.auth().currentUser;
-  if (user) {
-    firebase.database().ref("users/"+user.uid).child("name").on("value", function(snapshot) {
-      if (snapshot.exists()) {
-        openAlert("Dear "+snapshot.val(), "You have been successfully redirected to your account.<br>Your current email address is "+user.email, "Continue", function() {
-          $hide("#ub-join-container");
-          $show("#ub-dash-container");
-          $hide("#ub-guest-container");
-          $hide("#ub-anltcs-container");
-        });
-      }
-    });
-    $hide("#ub-join-container");
-    $show("#ub-dash-container");
-    $hide("#ub-guest-container");
-    $hide("#ub-anltcs-container");
-    dashQuery(user);
-  } else {
-    $show("#ub-guest-container");
-    $hide("#ub-dash-container");
-    $hide("#ub-guest-container");
-    $hide("#ub-join-container");
-    $hide("#ub-anltcs-container");
-  }
-}, 100);
-
 /* Alerts */
 let alert_main = document.getElementById('alert-main');
 let alert_msg = document.getElementById('alert-msg');
@@ -318,11 +312,11 @@ alert["error"] = function(msg) {
   if (msg != "" && msg != null) {
     alert_msg.innerHTML = msg;
   } else if (msg == null) {
-    alert_msg.innerHTML = "[Null]";
+    alert_msg.innerHTML = "Null";
   } else if (msg == "") {
-    alert_msg.innerHTML = "[Empty]";
+    alert_msg.innerHTML = "Empty";
   } else {
-    alert_msg.innerHTML = "[Undefined]";
+    alert_msg.innerHTML = "Undefined";
   }
   setTimeout(()=>{
       alert_main.style.height = '0px';
