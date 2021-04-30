@@ -51,7 +51,6 @@ $("#signUp").onclick = function () {
     firebase.auth().createUserWithEmailAndPassword($("#email").value, $("#password").value)
     .then((data) => {
       signUpQuery(new Date(), data);
-      $hide("#ub-join-layer");
       signUpAlert(data);
       dashQuery(data.user);
     })
@@ -154,9 +153,12 @@ function signUpQuery(today, data) {
     password: window.btoa($("#password").value),
     isVerified: false
   });
-  firebase.database().ref('branch/'+data.user.uid).set({
-    isVerified: false,
-    active: false
+  firebase.database().ref('qa/'+data.user.uid).set({
+    
+  });
+  firebase.database().ref('play/'+data.user.uid).set({
+    level: 1,
+    xp: 100
   });
   firebase.database().ref('activity/'+data.user.uid).set({
     joined: {
@@ -216,13 +218,15 @@ function dashQuery(data) {
       }
      /**/ $hide("#ub-join-layer");
   });
-  firebase.database().ref("branch").child(data.uid).on("value", function(snapshot) {
+  firebase.database().ref("qa").child(data.uid).on("value", function(snapshot) {
     if (snapshot.exists()) {
-      if(snapshot.val().active && snapshot.val().active == true){
-          $("#ub-dash-branch-p").innerHTML = snapshot.val().name;
-      } else if(snapshot.val().active && snapshot.val().active == false) {
-      	$("#ub-dash-branch-p").innerHTML = "You have no branch";
+      if(snapshot.val().length = 0) {
+      	$("#ub-dash-qa-p").innerHTML = "You have no Q/A discussion";
       }
+      for(var i=0; i<snapshot.val().length; i++){
+      	let post = snapshot.val()[i].post;
+          $("#ub-dash-qa-p").innerHTML += "<div class='ub-qa-post'><i class='fa fa-code-branch'></i> "+post+"</div>";
+      } 
       /**/ $hide("#ub-join-layer");
     } else {
       /**/ $hide("#ub-join-layer");
@@ -252,7 +256,7 @@ function signUpAlert(data) {
       $show("#ub-dash-container");
       $hide("#ub-guest-container");
       $hide("#ub-anltcs-container");
-      $show("#ub-join-layer");
+      $hide("#ub-join-layer");
     });
 }
 
@@ -295,9 +299,9 @@ const getUA = () => {
 }
 
 /* Alerts */
-let alert_main = document.getElementById('alert-main');
-let alert_msg = document.getElementById('alert-msg');
-let alert_btn = document.getElementById('alert-btn');
+let alert_main = document.getElementById('ub-alert-main');
+let alert_msg = document.getElementById('ub-alert-msg');
+let alert_btn = document.getElementById('ub-alert-btn');
 
 alert_btn.onclick = function() {
   alert_main.style.height = '0px';
@@ -308,7 +312,7 @@ alert_main.ontouchmove = function() {
 }
 
 alert["error"] = function(msg) {
-  document.getElementById('alert-icon').className = 'fa fa-warning';
+  document.getElementById('ub-alert-icon').className = 'fa fa-warning';
   if (msg != "" && msg != null) {
     alert_msg.innerHTML = msg;
   } else if (msg == null) {
@@ -325,7 +329,7 @@ alert["error"] = function(msg) {
   alert_main.style.background = '#ff3535';
 }
 alert["log"] = function(msg) {
-  document.getElementById('alert-icon').className = 'fa fa-bell';
+  document.getElementById('ub-alert-icon').className = 'fa fa-bell';
   if (msg != "" && msg != null) {
     alert_msg.innerHTML = msg;
   } else if (msg == null) {
