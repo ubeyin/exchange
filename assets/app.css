@@ -8,6 +8,7 @@ body {
   margin: 0;
 }
 
+
 /* Applied Global Design */
 button,* {
   font-family: Poppins;
@@ -216,7 +217,7 @@ i {
 .ub-join > h1,.ub-join > h2, .ub-join > h3, .ub-join > h4, .ub-join > h5,.ub-join > h6 {
   font-size: 30px;
 }
-.ub-join > input[type=text], .ub-join > input[type=email], .ub-join > input[type=password], .ub-join > input[type=url] {
+.ub-join > input[type=text], .ub-join > input[type=email], .ub-join > input[type=password], #ub-i-input, .ub-join > input[type=url] {
   width: 80%;
   height: auto;
   padding: 10px;
@@ -227,7 +228,7 @@ i {
   color: #333;
   transition: 1.5s all ease;
 }
-.ub-join > input[type=text]:focus, .ub-join > input[type=email]:focus, .ub-join > input[type=password]:focus, .ub-join > input[type=url]:focus {
+.ub-join > input[type=text]:focus, .ub-join > input[type=email]:focus, .ub-join > input[type=password]:focus, .ub-join > input[type=url]:focus, #ub-i-input:focus {
   background: none;
 }
 .ub-join > input:focus {}
@@ -241,7 +242,7 @@ i {
 }
 .ub-dash-banner {
   width: 100%;
-  height: 400px;
+  min-height: 400px;
   background: #1E69CE;
   padding-bottom: 10px;
   color: white;
@@ -285,13 +286,14 @@ i {
   text-align: right;
   float: right;
   color: #333;
+  font-size: 14px;
 }
 
 /* Alerts */
 .ub-alert {
   position: fixed;
   top: calc(35.10% - 20px);
-  left: 10px;
+  margin-left: calc(5% - 10px);
   width: 80%;
   min-height: 150px;
   background: #fff;
@@ -328,7 +330,7 @@ i {
   padding-bottom: 6px;
   opacity: 0.6;
 }
-.ub-alert-main  {
+.ub-alert-main {
   width: 100%;
   height: 0px;
   background: #222;
@@ -379,7 +381,7 @@ i {
   font-size: 15px;
 }
 .dash-alert-main {
-  height: auto;
+  height: 70px;
   position: none;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -408,7 +410,12 @@ i {
   max-width: 80px;
   font-size: 15px;
   float: left;
+  height: 70px;
 }
+
+
+/**/
+
 .ub-qa-post {
   text-align: left;
   border-top: 0.7px solid rgba(0,0,0,0.4);
@@ -416,7 +423,14 @@ i {
   color: #333;
 }
 #ub-dash-qa-p {
-  height: 250px;
+  min-height: 250px;
+  max-height: 500px;
   width: auto;
   overflow: scroll;
+}
+.ub-alert > .ub-btn-x:first-child {
+	margin-bottom: 2px;
+}
+.ub-alert > .ub-btn-x:last-child {
+	margin-top: 2px;
 }
