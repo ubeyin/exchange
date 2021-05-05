@@ -187,6 +187,7 @@ function signInQuery(today, data) {
 function dashQuery(data) {
   $("#dash-uid").innerHTML = "<i class='fa fa-fingerprint'></i>"+data.uid;
   firebase.database().ref("users").child(data.uid).on("value", function(snapshot) {
+    $hide("#ub-join-layer");
     if (snapshot.exists()) {
       $("#dash-uname").innerHTML = snapshot.val().name;
     } else {
@@ -203,11 +204,6 @@ function dashQuery(data) {
     }
     /**/ $hide("#ub-join-layer");
   });
-  
-  setTimeout(function() {
-    /**/ $hide("#ub-join-layer");
-  },
-    100);
 }
 
 // All functions of order
